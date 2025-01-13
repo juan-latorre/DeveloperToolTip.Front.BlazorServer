@@ -4,10 +4,10 @@
 @rendermode InteractiveServer
 
 @inject IAuthService AuthService
-@* @inject NavigationManager NavigationManager *@
+
 @inject Blazored.LocalStorage.ILocalStorageService LocalStorage
 @inject IJSRuntime js
-
+@* @inject NavigationManager NavigationManager *@
 
 @* <h1 class="text-muted">Render @(OperatingSystem.IsBrowser() ? "Wasm" : "Server")</h1> *@
 <div class="login-container">
