@@ -5,5 +5,6 @@ namespace DeveloperToolTip.Front.BlazorServer.Services
     public interface IRoleService
     {
         Task<IEnumerable<RoleDto>> GetAllRoles();
+        Task<RoleDto?> GetRoleById(int id);
     }
 }
