@@ -19,5 +19,11 @@ namespace DeveloperToolTip.Front.BlazorServer.Services
 
             return response ?? Enumerable.Empty<RoleDto>();
         }
+
+        public async Task<RoleDto?> GetRoleById(int id)
+        {
+           var response = await _httpClient.GetFromJsonAsync<RoleDto>($"RoleDeveloper/{id}");
+           return response;
+        }
     }
 }
