@@ -1,0 +1,17 @@
+﻿@page "/logout"
+
+@* @inject NavigationManager NavigationManager *@
+@inject Blazored.LocalStorage.ILocalStorageService LocalStorage
+
+<h3>Logging out...</h3>
+
+@code {
+    protected override async Task OnInitializedAsync()
+    {
+        // Eliminar el token de autenticación almacenado
+        await LocalStorage.RemoveItemAsync("authToken");
+
+        // Redirigir al componente de Login
+        navManager.NavigateTo("/login", true);
+    }
+}

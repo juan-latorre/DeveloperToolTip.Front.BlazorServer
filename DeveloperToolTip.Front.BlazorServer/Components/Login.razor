@@ -1,0 +1,71 @@
+﻿@using DeveloperToolTip.Front.BlazorServer.Services
+
+@page "/"
+@rendermode InteractiveServer
+
+@inject IAuthService AuthService
+@* @inject NavigationManager NavigationManager *@
+@inject Blazored.LocalStorage.ILocalStorageService LocalStorage
+@inject IJSRuntime js
+
+
+@* <h1 class="text-muted">Render @(OperatingSystem.IsBrowser() ? "Wasm" : "Server")</h1> *@
+<div class="login-container">
+    <p>@errorMessage</p>
+    <div class="wrapper">
+        <div class="formContent">
+            <img class="icon" src="/images/logoDNP.png" alt="Logo">
+            <h4>Developer ToolTips</h4>
+            <EditForm Model="@loginModel" OnValidSubmit="HandleLogin" FormName="LoginForm">
+                <DataAnnotationsValidator />
+                <ValidationSummary />
+                <br>
+                <div class="user-box">
+                    <label>Username:</label>
+                    <InputText id="login" class="form-control" @bind-Value="loginModel.Username" />
+                </div>
+
+                <div class="user-box">
+                    <label>Password:</label>
+                    <InputText id="password" class="form-control" @bind-Value="loginModel.Password" Type="password" />
+                </div>
+
+                <button type="submit" class="btn btn-info">Ingresar</button>
+            </EditForm>
+        </div>
+    </div>
+</div>
+
+
+@code {
+    [SupplyParameterFromForm]
+    public LoginModel loginModel { get; set; } = new LoginModel();
+    private string? errorMessage;
+    private string? token;
+
+    private async Task HandleLogin()
+    {
+        try
+        {
+            //var token = await ApiClientService.LoginAsync(loginModel);
+            var token = await AuthService.Login(loginModel);
+
+            if (!string.IsNullOrEmpty(token))
+            {
+                // await js.InvokeVoidAsync("alert","Bienvenido!");
+                await Task.Yield();
+                StateHasChanged();
+                await LocalStorage.SetItemAsync("authToken", token);
+                navManager.NavigateTo("/home", true);
+            }
+            else
+            {
+                errorMessage = "Invalid username or password.";
+            }
+        }
+        catch (Exception ex)
+        {
+            errorMessage = $"An error occurred: {ex.Message}";
+        }
+    }
+}
