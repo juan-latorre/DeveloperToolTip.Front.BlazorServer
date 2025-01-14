@@ -31,3 +31,5 @@ TestResults/
 Thumbs.db
 
 .fake
+
+appsettings.json
