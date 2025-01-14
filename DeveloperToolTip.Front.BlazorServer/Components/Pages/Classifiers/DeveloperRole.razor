@@ -1,78 +1,60 @@
 ﻿@using DeveloperToolTip.Front.BlazorServer.Services
 @using Radzen
+@using Newtonsoft.Json;
+@using System.Net.Http.Json;
 
 @page "/classifiers/DeveloperRole"
 @inject IRoleService _IRoleService
 
 <h3>Manage Developer Roles</h3>
 
-@* <div>
-    <button class="btn btn-primary" @onclick="AddNewRole">Add New Role</button>
-</div> *@
-
 @if (Roles != null && Roles.Any())
 {
-<table class="table mt-3">
-    <thead>
-        <tr>
-            <th>Role ID</th>
-            <th>Role Name</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var role in Roles)
-        {
-            <tr>
-                <td>@role.Id</td>
-                <td>@role.RoleName</td>
-                <td>
-                    @* <button class="btn btn-warning btn-sm" @onclick="() => EditRole(role.Id)">Edit</button> *@
-                    @* <button class="btn btn-danger btn-sm" @onclick="() => DeleteRole(role.Id)">Delete</button> *@
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+    <RadzenDataGrid Data="@Roles" TItem="RoleDto" RowSelect="@OnRowSelect" class="rz-datagrid">
+        <Columns>
+            <RadzenDataGridColumn TItem="RoleDto" Property="Id" Title="Role ID" />
+            <RadzenDataGridColumn TItem="RoleDto" Property="RoleName" Title="Role Name" />
+            <RadzenDataGridColumn TItem="RoleDto" Title="Actions">
+                <Template Context="roles">
+                    <RadzenButton Icon="edit" Class="rz-button rz-button-sm rz-button-warning" Text="Edit" Click="@(() => EditCategory(roles.Id))" />
+                    <RadzenButton Icon="delete" Class="rz-button rz-button-sm rz-button-danger" Text="Delete" Click="@(() => DeleteCategory(roles.Id))" Style="margin-left: 10px;" />
+                </Template>
+            </RadzenDataGridColumn>
+        </Columns>
+    </RadzenDataGrid>
 }
 else
 {
- <p>No roles available!</p>
+    <p>No Categories available!</p>
 }
-
-<br />
-
-@* <RadzenDataGrid AllowFiltering="true" AllowColumnResize="true" AllowAlternatingRows="false" FilterMode="FilterMode.Advanced" AllowSorting="true" PageSize="5" AllowPaging="true" PagerHorizontalAlign="HorizontalAlign.Left" ShowPagingSummary="true">
-Data="@roles" ColumnWidth="300px" LogicalFilterOperator="LogicalFilterOperator.Or" SelectionMode="DataGridSelectionMode.Single" @bind-Value=@roles>
-<Columns>
-    <RadzenDataGridColumn Property="@nameof(Roles.Id)" Filterable="false" Title="ID" Frozen="true" Width="80px" TextAlign="TextAlign.Center" /><RadzenDataGridColumn Property="@nameof(Roles.Id)" Filterable="false" Title="ID" Frozen="true" Width="80px" TextAlign="TextAlign.Center" />
-    <RadzenDataGridColumn Property="@nameof(Roles.RoleName)" Title="Role Name" Frozen="true" Width="160px" />
-</Columns>
-</RadzenDataGrid> *@
 
 
 
 @code {
-    // IQueryable<RoleDto> rolesDev;
-    // IList<RoleDto> selectedrolesDev;
      
     private IEnumerable<RoleDto> Roles { get; set; } = Enumerable.Empty<RoleDto>();
-
+    
     protected override async Task OnInitializedAsync()
     {
         Roles = await _IRoleService.GetAllRoles();
-
-       // selectedrolesDev = new List<RoleDto>() { rolesDev.FirstOrDefault() };
     }
 
-    private void AddNewRole()
+    private void EditCategory(int roleId)
     {
-        navManager.NavigateTo("/DeveloperRole/add");
+        // Implementar lógica para editar la categoría
+        Console.WriteLine($"Edit Role with ID: {roleId}");
     }
 
-    private void EditRole(int roleId)
+    private void DeleteCategory(int roleId)
     {
-        navManager.NavigateTo($"/DeveloperRole/edit/{roleId}");
+        // Implementar lógica para eliminar la categoría
+        Console.WriteLine($"Delete Category with ID: {roleId}");
+    }
+
+    private void OnRowSelect(RoleDto role)
+    {
+        // Implementar lógica al seleccionar una fila, si es necesario
+        Console.WriteLine($"Selected Category: {role.RoleName}");
     }
 
  
