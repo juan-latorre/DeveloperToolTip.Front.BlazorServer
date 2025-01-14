@@ -1,0 +1,65 @@
+﻿@page "/test-radzen"
+
+@using DeveloperToolTip.Front.BlazorServer.Services
+@inject ICategoryService _ICategoryService
+
+<h3>Topic Categories</h3>
+
+@if (Categories != null && Categories.Any())
+{
+    <div class="table-responsive">
+        <table class="table table-striped table-hover mt-3">
+            <thead class="table-dark">
+                <tr>
+                    <th>Role ID</th>
+                    <th>Role Name</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var category in Categories)
+                {
+                    <tr>
+                        <td>@category.Id</td>
+                        <td>@category.CategoryName</td>
+                        <td>
+                            <button class="btn btn-warning btn-sm" @onclick="() => EditCategory(category.Id)">
+                                <i class="bi bi-pencil-square"></i> Edit
+                            </button>
+                            <button class="btn btn-danger btn-sm ms-2" @onclick="() => DeleteCategory(category.Id)">
+                                <i class="bi bi-trash"></i> Delete
+                            </button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+else
+{
+    <p>No Categories available!</p>
+}
+
+@code {
+
+    private IEnumerable<TopicCategoryDto> Categories { get; set; } = Enumerable.Empty<TopicCategoryDto>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        Categories = await _ICategoryService.GetAllCategories();
+    }
+
+    private void EditCategory(int categoryId)
+    {
+        // Implementar lógica para editar la categoría
+        Console.WriteLine($"Edit Category with ID: {categoryId}");
+    }
+
+    private void DeleteCategory(int categoryId)
+    {
+        // Implementar lógica para eliminar la categoría
+        Console.WriteLine($"Delete Category with ID: {categoryId}");
+    }
+}
+
