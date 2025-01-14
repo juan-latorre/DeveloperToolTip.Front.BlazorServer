@@ -6,7 +6,7 @@ namespace DeveloperToolTip.Front.BlazorServer.Services
     {
         Task<IEnumerable<TopicCategoryDto>> GetAllCategories();
         Task<TopicCategoryDto?> GetCategoryById(int id);
-        Task<bool> CreateCategory(TopicCategoryDto category);
+        Task<bool> CreateCategory(CreateCategoryDto category);
         Task<bool> UpdateCategory(TopicCategoryDto category);
         Task<bool> DeleteCategory(int id);
 
