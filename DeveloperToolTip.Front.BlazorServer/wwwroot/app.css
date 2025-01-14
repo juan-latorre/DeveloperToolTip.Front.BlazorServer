@@ -1,5 +1,6 @@
 html, body {
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    /*font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;*/
+    font-family: 'Nunito Sans', sans-serif; /*Fuente de gov.co*/
     background-color: #f4f4f4;
 }
 
@@ -72,4 +73,32 @@ h1:focus {
     margin-left:5%;
 }
 
+
+/*Estilos MinTIC*/
+
+header {
+    background-color: #3366cc;
+    color: white; /* Opcional, para texto blanco */
+    padding: 10px; /* Ajusta el padding según sea necesario */
+}
+
+footer {
+    width: 100vw;
+    background-color: #3366cc;
+    color: white; /* Opcional, para texto blanco */
+    padding: 10px; /* Ajusta el padding según sea necesario */
+}
+.DNPFooter-bar-container {
+    width: 100%;
+    max-width: 1280px;
+    margin: 0 auto;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.DNPFooter-bar-logo {
+    height: 2.5vw;
+    margin-right: 1vw;
+    padding-right: 1vw;
+}
 

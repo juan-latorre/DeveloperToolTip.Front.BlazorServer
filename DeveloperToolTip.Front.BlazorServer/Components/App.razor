@@ -8,6 +8,13 @@
     <link rel="stylesheet" href="bootstrap/bootstrap.min.css" />
     <link rel="stylesheet" href="app.css" />
     <link rel="stylesheet" href="DeveloperToolTip.Front.BlazorServer.styles.css" />
+    
+    <link rel="stylesheet" href="_content/Radzen.Blazor/css/standar-base.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+
+    
     <link rel="icon" type="image/png" href="favicon.png" />
     <RadzenTheme Theme="material" @rendermode="InteractiveServer" />
     <HeadOutlet @rendermode="InteractiveServer" />
@@ -15,12 +22,23 @@
 </head>
 <body>
   
+    <header>
+        <h1>Mi Aplicación</h1>
+    </header>
     
     <CascadingAuthenticationState>
         <Routes @rendermode="InteractiveServer" />
-        <script src="_framework/blazor.web.js"></script>
-        <script src="_content/Radzen.Blazor/Radzen.Blazor.js?v=@(typeof(Radzen.Colors).Assembly.GetName().Version)"></script>
+        <script src="_content/Radzen.Blazor/Radzen.Blazor.js"></script>
+        <script src="_framework/blazor.web.js"></script>       
     </CascadingAuthenticationState>
+
+    <footer>
+        <div class="DNPFooter-bar-container">
+            <img src="~/Images/colombia_co.png" alt="Logo Marca Colombia" class="DNPFooter-bar-logo" />
+
+        </div>
+        <p>&copy; 2025 - Mi Aplicación</p>
+    </footer>
    
 </body>
 </html>
