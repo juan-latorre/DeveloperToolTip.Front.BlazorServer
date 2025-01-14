@@ -52,7 +52,7 @@ namespace DeveloperToolTip.Front.BlazorServer.Services
         {
             try
             {
-                var response = await _httpClient.PutAsJsonAsync($"TopicCategory/{category.Id}", category);
+                var response = await _httpClient.PutAsJsonAsync($"TopicCategory", category);
                 return response.IsSuccessStatusCode;
             }
             catch (Exception)

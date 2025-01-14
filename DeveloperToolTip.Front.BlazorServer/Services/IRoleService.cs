@@ -6,8 +6,8 @@ namespace DeveloperToolTip.Front.BlazorServer.Services
     {
         Task<IEnumerable<RoleDto>> GetAllRoles();
         Task<RoleDto?> GetRoleById(int id);
-        Task<bool> CreateRole(RoleDto role);
+        Task<bool> CreateRole(CreateRoleDto role);
         Task<bool> UpdateRole(RoleDto role);
-        Task<bool> DeleteRole(int id);
+        Task<bool> DeleteRole(int roleId);
     }
 }

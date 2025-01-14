@@ -20,14 +20,14 @@ namespace DeveloperToolTip.Front.BlazorServer.Services
             return response ?? Enumerable.Empty<RoleDto>();
         }
 
-        public async Task<RoleDto?> GetRoleById(int id)
+        public async Task<RoleDto?> GetRoleById(int roleId)
         {
-           var response = await _httpClient.GetFromJsonAsync<RoleDto>($"RoleDeveloper/{id}");
+           var response = await _httpClient.GetFromJsonAsync<RoleDto>($"RoleDeveloper/{roleId}");
            return response;
         }
 
         // Roles: Create Role
-        public async Task<bool> CreateRole(RoleDto role)
+        public async Task<bool> CreateRole(CreateRoleDto role)
         {
             try
             {
@@ -45,7 +45,7 @@ namespace DeveloperToolTip.Front.BlazorServer.Services
         {
             try
             {
-                var response = await _httpClient.PutAsJsonAsync($"RoleDeveloper/{role.Id}", role);
+                var response = await _httpClient.PutAsJsonAsync($"RoleDeveloper", role);
                 return response.IsSuccessStatusCode;
             }
             catch (Exception)
@@ -55,11 +55,11 @@ namespace DeveloperToolTip.Front.BlazorServer.Services
         }
 
         // Roles: Delete Role
-        public async Task<bool> DeleteRole(int id)
+        public async Task<bool> DeleteRole(int roleId)
         {
             try
             {
-                var response = await _httpClient.DeleteAsync($"RoleDeveloper/{id}");
+                var response = await _httpClient.DeleteAsync($"RoleDeveloper/{roleId}");
                 return response.IsSuccessStatusCode;
             }
             catch (Exception)
