@@ -5,124 +5,135 @@
 
 @page "/classifiers/DeveloperRole"
 @inject IRoleService _IRoleService
-@inject Radzen.DialogService _DialogService
+@inject DialogService _DialogService
+@inject NotificationService NotificationService
 
+<!-- DeveloperRole.razor -->
 
+<h3>Developer Roles</h3>
+<p></p>
 
-<div class="container mt-4">
-    <h2>Developer Roles</h2>
-    <RadzenDataGrid TItem="RoleDto" Data="@DtoRoles" RowSelect="@OnRowSelect" AllowPaging="true" PageSize="10" AllowSorting="true" AllowFiltering="true">
+<div class="row mb-3">
+    <div class="col">
+        <RadzenButton Icon="add" Text="Create Role" ButtonStyle="ButtonStyle.Primary" Click="@OpenCreateDialog" />
+    </div>
+</div>
+
+@if (Roles != null && Roles.Any())
+{
+    <RadzenDataGrid Data="@Roles" TItem="RoleDto" RowSelect="@OnRowSelect" class="rz-datagrid">
         <Columns>
-            <RadzenDataGridColumn TItem="RoleDto" Property="Id" Title="ID" />
+            <RadzenDataGridColumn TItem="RoleDto" Property="Id" Title="Role ID" />
             <RadzenDataGridColumn TItem="RoleDto" Property="RoleName" Title="Role Name" />
-            <RadzenDataGridColumn TItem="RoleDto" Title="Actions">
+            <RadzenDataGridColumn TItem="RoleDto" Title="Actions" TextAlign="TextAlign.Center">
                 <Template Context="role">
-                    <button class="btn btn-primary btn-sm" @onclick="() => EditRole(role)">Edit</button>
-                    <button class="btn btn-danger btn-sm" @onclick="() => DeleteRole(role.Id)">Delete</button>
+                    <RadzenButton Icon="edit" ButtonStyle="ButtonStyle.Warning" Click="@(() => OpenEditDialog(role))" />
+                    <RadzenButton Icon="delete" ButtonStyle="ButtonStyle.Danger" Click="@(() => OpenDeleteDialog(role))" Style="margin-left: 10px;" />
                 </Template>
             </RadzenDataGridColumn>
         </Columns>
     </RadzenDataGrid>
+}
+else
+{
+    <RadzenAlert AlertStyle="AlertStyle.Info" ShowIcon="true">
+        No Roles available!
+    </RadzenAlert>
+}
 
-    <hr />
-    <div>
-        <h3>@(IsEditMode ? "Edit Role" : "Create New Role")</h3>
-        <EditForm Model="@SelectedRole" OnValidSubmit="@SaveRole">
-            <DataAnnotationsValidator />
-            <ValidationSummary />
-            <div class="mb-3">
-                <label for="RoleName" class="form-label">Role Name</label>
-                <InputText id="RoleName" class="form-control" @bind-Value="SelectedRole.RoleName" />
-            </div>
-            <button type="submit" class="btn btn-success">@("Save")</button>
-            <button type="button" class="btn btn-secondary" @onclick="CancelEdit">Cancel</button>
-        </EditForm>
-    </div>
-</div>
+
 
 @code {
-
-    private List<RoleDto> DtoRoles = new();
-    private RoleDto SelectedRole = new();
-    private bool IsEditMode = false;
+    private IEnumerable<RoleDto> Roles { get; set; } = Enumerable.Empty<RoleDto>();
+    //private RoleDto SelectedRole = new();
 
     protected override async Task OnInitializedAsync()
     {
-        await LoadRolesAsync();
+        await LoadRoles();
     }
 
-    private async Task LoadRolesAsync()
+    private async Task LoadRoles()
     {
-        var roles = await _IRoleService.GetAllRoles();
-        DtoRoles = roles.ToList();
+        Roles = await _IRoleService.GetAllRoles();
+        StateHasChanged();
     }
+
+    private async Task OpenCreateDialog()
+    {
+        var result = await _DialogService.OpenAsync<CreateRoleDialog>("Create Role");
+        if (result != null)
+        {
+            var newRole = new CreateRoleDto { RoleName = result.ToString() };
+            //var _newRole = MapToCreateRoleDto(SelectedRole);
+            var success = await _IRoleService.CreateRole(newRole);
+
+            if (success)
+            {
+                NotificationService.Notify(NotificationSeverity.Success, "Success", "Role created successfully!");
+                await LoadRoles();
+            }
+            else
+            {
+                NotificationService.Notify(NotificationSeverity.Error, "Error", "Failed to create Role");
+            }
+        }
+    }
+
+    private async Task OpenEditDialog(RoleDto role)
+    {
+        var result = await _DialogService.OpenAsync<EditRoleDialog>("Edit Role", 
+        new Dictionary<string, object> { { "Role", role } });
+
+        if (result != null)
+        {
+            role.RoleName = result.ToString();
+            var success = await _IRoleService.UpdateRole(role);
+
+            if (success)
+            {
+                NotificationService.Notify(NotificationSeverity.Success, "Success", "Role updated successfully!");
+                await LoadRoles();
+            }
+            else
+            {
+                NotificationService.Notify(NotificationSeverity.Error, "Error", "Failed to update Role");
+            }
+        }
+    }
+
+    private async Task OpenDeleteDialog(RoleDto role)
+    {
+        var confirm = await _DialogService.Confirm("Are you sure you want to delete this Role?",
+            $"Delete {role.RoleName}",
+            new ConfirmOptions() { OkButtonText = "Yes", CancelButtonText = "No" });
+
+        if (confirm == true)
+        {
+            var success = await _IRoleService.DeleteRole(role.Id);
+
+            if (success)
+            {
+                NotificationService.Notify(NotificationSeverity.Success, "Success", "Role deleted successfully!");
+                await LoadRoles();
+            }
+            else
+            {
+                NotificationService.Notify(NotificationSeverity.Error, "Error", "Failed to delete Role");
+            }
+        }
+    }
+
+    // private CreateRoleDto MapToCreateRoleDto(RoleDto role)
+    // {
+    //     return new CreateRoleDto
+    //         {
+    //             RoleName = role.RoleName
+    //         };
+    // }
 
     private void OnRowSelect(RoleDto role)
     {
-        SelectedRole = role;
+       NotificationService.Notify(NotificationSeverity.Info, "Selected", $"Selected Role: {role.RoleName}");
     }
-
-    private void EditRole(RoleDto role)
-    {
-        SelectedRole = role;
-        IsEditMode = true;
-    }
-
-    private async Task DeleteRole(int id)
-    {
-        var confirmed = await _DialogService.Confirm("Are you sure you want to delete this role?");
-        if (confirmed == true)
-        {
-            var success = await _IRoleService.DeleteRole(id);
-            if (success)
-            {
-                await LoadRolesAsync();
-            }
-        }
-    }
-
-    private void CancelEdit()
-    {
-        SelectedRole = new RoleDto();
-        IsEditMode = false;
-    }
-
-    private async Task SaveRole()
-    {
-        var _newRole = MapToCreateRoleDto(SelectedRole);
-
-        if (SelectedRole.Id == 0)
-        {
-           
-            // Create new role
-           
-            var success = await _IRoleService.CreateRole(_newRole);
-            if (success)
-            {
-                await LoadRolesAsync();
-            }
-        }
-        else
-        {
-            // Update existing role
-            var success = await _IRoleService.UpdateRole(SelectedRole);
-            if (success)
-            {
-                await LoadRolesAsync();
-            }
-        }
-
-        SelectedRole = new RoleDto();
-        IsEditMode = false;
-    }
-
-    private CreateRoleDto MapToCreateRoleDto(RoleDto role)
-    {
-        return new CreateRoleDto
-            {
-                RoleName = role.RoleName
-            };
-    }
-
- 
 }
+

@@ -1,0 +1,39 @@
+﻿@inject DialogService _DialogService
+
+<!-- CreateRoleDialog.razor -->
+
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <div class="form-group">
+                <label for="roleName">Role Name:</label>
+                <RadzenTextBox id="roleName"
+                               @bind-Value="@roleName"
+                               class="w-100" />
+            </div>
+
+            <div class="mt-3">
+                <RadzenButton Text="Save"
+                              Click="@SaveRole"
+                              ButtonStyle="ButtonStyle.Primary"
+                              class="mr-2" />
+
+                <RadzenButton Text="Cancel"
+                              Click="@(() => _DialogService.Close(null))"
+                              ButtonStyle="ButtonStyle.Secondary" />
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    private string roleName = string.Empty;
+
+    private void SaveRole()
+    {
+        if (!string.IsNullOrWhiteSpace(roleName))
+        {
+            _DialogService.Close(roleName);
+        }
+    }
+}
