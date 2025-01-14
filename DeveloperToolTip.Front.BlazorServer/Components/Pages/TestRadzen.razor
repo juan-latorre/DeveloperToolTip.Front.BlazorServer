@@ -1,71 +1,65 @@
 ﻿@page "/test-radzen"
-<h3>TestRadzen</h3>
 
-@inject ThemeService ThemeService
-@implements IDisposable
+@using DeveloperToolTip.Front.BlazorServer.Services
+@inject ICategoryService _ICategoryService
 
-<RadzenStack class="rz-p-0 rz-p-md-6 rz-p-lg-12">
-    <RadzenCard Variant="Variant.Outlined">
-        <RadzenStack Orientation="Orientation.Horizontal" Wrap="FlexWrap.Wrap">
-            <!-- Theme Selection -->
-            <RadzenStack Orientation="Orientation.Vertical" Gap="0.5rem" class="rz-p-sm-2">
-                <RadzenLabel Text="Change the current theme" />
-                <RadzenDropDown Name="ThemeDropDown"
-                                TValue="string"
-                                Value="@ThemeService.Theme"
-                                ValueChanged="@ChangeTheme"
-                                Data="@Themes.All"
-                                TextProperty=@nameof(Theme.Text)
-                                ValueProperty=@nameof(Theme.Value) />
-            </RadzenStack>
+<h3>Topic Categories</h3>
 
-            <!-- Right-to-Left Switch -->
-            <RadzenStack Orientation="Orientation.Vertical" Gap="0.5rem" class="rz-p-sm-2">
-                <RadzenLabel Text="Right-to-left" />
-                <RadzenSwitch Value="@(ThemeService.RightToLeft ?? false)"
-                              ValueChanged="@ChangeRightToLeft" />
-            </RadzenStack>
-
-            <!-- WCAG Compliance Switch -->
-            <RadzenStack Orientation="Orientation.Vertical" Gap="0.5rem" class="rz-p-sm-2">
-                <RadzenLabel Text="WCAG compliant colors" />
-                <RadzenSwitch Value="@(ThemeService.Wcag ?? false)"
-                              ValueChanged="@ChangeWcag"
-                              Name="WCAG" />
-            </RadzenStack>
-        </RadzenStack>
-    </RadzenCard>
-</RadzenStack>
+@if (Categories != null && Categories.Any())
+{
+    <div class="table-responsive">
+        <table class="table table-striped table-hover mt-3">
+            <thead class="table-dark">
+                <tr>
+                    <th>Role ID</th>
+                    <th>Role Name</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var category in Categories)
+                {
+                    <tr>
+                        <td>@category.Id</td>
+                        <td>@category.CategoryName</td>
+                        <td>
+                            <button class="btn btn-warning btn-sm" @onclick="() => EditCategory(category.Id)">
+                                <i class="bi bi-pencil-square"></i> Edit
+                            </button>
+                            <button class="btn btn-danger btn-sm ms-2" @onclick="() => DeleteCategory(category.Id)">
+                                <i class="bi bi-trash"></i> Delete
+                            </button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+else
+{
+    <p>No Categories available!</p>
+}
 
 @code {
-    void ChangeTheme(string value)
+
+    private IEnumerable<TopicCategoryDto> Categories { get; set; } = Enumerable.Empty<TopicCategoryDto>();
+
+    protected override async Task OnInitializedAsync()
     {
-        ThemeService.SetTheme(value);
+        Categories = await _ICategoryService.GetAllCategories();
     }
 
-    void ChangeRightToLeft(bool value)
+    private void EditCategory(int categoryId)
     {
-        ThemeService.SetRightToLeft(value);
+        // Implementar lógica para editar la categoría
+        Console.WriteLine($"Edit Category with ID: {categoryId}");
     }
 
-    void ChangeWcag(bool value)
+    private void DeleteCategory(int categoryId)
     {
-        ThemeService.SetWcag(value);
-    }
-
-    protected override void OnInitialized()
-    {
-        ThemeService.ThemeChanged += OnThemeChanged;
-    }
-
-    void OnThemeChanged()
-    {
-        Console.WriteLine($"Theme changed to {ThemeService.Theme}");
-    }
-
-    public void Dispose()
-    {
-        // Libera recursos o suscripciones.
-        ThemeService.ThemeChanged -= OnThemeChanged;
+        // Implementar lógica para eliminar la categoría
+        Console.WriteLine($"Delete Category with ID: {categoryId}");
     }
 }
+

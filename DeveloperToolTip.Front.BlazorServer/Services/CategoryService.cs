@@ -34,7 +34,7 @@ namespace DeveloperToolTip.Front.BlazorServer.Services
         }
 
         // TopicCategories: Create Category
-        public async Task<bool> CreateCategory(TopicCategoryDto category)
+        public async Task<bool> CreateCategory(CreateCategoryDto category)
         {
             try
             {
