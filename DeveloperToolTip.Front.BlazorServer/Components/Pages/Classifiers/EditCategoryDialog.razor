@@ -1,0 +1,38 @@
+﻿@inject DialogService DialogService
+
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <div class="form-group">
+                <label for="categoryName">Category Name:</label>
+                <RadzenTextBox id="categoryName"
+                               @bind-Value="@Category.CategoryName"
+                               class="w-100" />
+            </div>
+
+            <div class="mt-3">
+                <RadzenButton Text="Save"
+                              Click="@SaveCategory"
+                              ButtonStyle="ButtonStyle.Primary"
+                              class="mr-2" />
+
+                <RadzenButton Text="Cancel"
+                              Click="@(() => DialogService.Close(null))"
+                              ButtonStyle="ButtonStyle.Secondary" />
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public TopicCategoryDto Category { get; set; }
+
+    private void SaveCategory()
+    {
+        if (!string.IsNullOrWhiteSpace(Category.CategoryName))
+        {
+            DialogService.Close(Category.CategoryName);
+        }
+    }
+}
