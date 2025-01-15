@@ -1,15 +1,39 @@
 ﻿@page "/home"
 @inject DialogService _DialogService
+@inject IJSRuntime JSRuntime
 
 @rendermode InteractiveServer
 
 <PageTitle>Home</PageTitle>
 
-<h1>Hello, world!</h1>
 
-Welcome to your new app.
 
-@* <RadzenButton Click="@ButtonClicked" Text="Hello Button">	</RadzenButton> *@
+@* 
+<button @onclick="CambiarContexto">Cambiar Contexto</button>
+<button @onclick="DisminuirTamanio">Disminuir Tamaño</button>
+<button @onclick="AumentarTamanio">Aumentar Tamaño</button> *@
+
+<div id="para-mirar" class="modo_claro-govco">
+    <h1>Hello, world!</h1>
+    <p>Welcome to your new app.</p>
+</div>
+
+@code {
+    private async Task CambiarContexto()
+    {
+        await JSRuntime.InvokeVoidAsync("cambiarContexto");
+    }
+
+    private async Task DisminuirTamanio()
+    {
+        await JSRuntime.InvokeVoidAsync("disminuirTamanio", "disminuir");
+    }
+
+    private async Task AumentarTamanio()
+    {
+        await JSRuntime.InvokeVoidAsync("aumentarTamanio", "aumentar");
+    }
+}
 
 
 @code {
