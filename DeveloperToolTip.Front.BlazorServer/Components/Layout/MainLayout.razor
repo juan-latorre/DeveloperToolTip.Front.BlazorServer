@@ -2,25 +2,38 @@
 
 <RadzenComponents @rendermode="InteractiveServer" />
 
-<div class="page">
-    <div class="sidebar">
-        @* <TooltipMenu/> *@
-        <NavMenu />
+<div class="main-layout">
+    <!-- Header -->
+    <header class="header">
+        <div class="container-fluid d-flex justify-content-between align-items-center">
+            <div class="logo">
+                <img src="/images/colombia_co.png" alt="App Logo" class="img-fluid" />
+            </div>
+            <h1 class="app-title">Developer ToolTips</h1>
+        </div>
+    </header>
+
+    <!-- Sidebar and Content -->
+    <div class="d-flex">
+        <nav class="sidebar">
+            <NavMenu />
+        </nav>
+        <main class="content flex-grow-1">
+            @Body
+        </main>
     </div>
 
-    <main>
-        <div class="top-row px-4">
-            <a href="https://learn.microsoft.com/aspnet/core/" target="_blank">About</a>
-        </div>
-
-        <article class="content px-4">
-            @Body
-        </article>
-    </main>
+    <!-- Footer -->
+    <footer class="header">
+        @* <div class="container"> *@
+            <div class="logo">
+                <img src="/images/colombia_co.png" alt="App Logo" class="img-fluid" />
+            </div>
+            <span>&copy; 2025 Your Organization. All rights reserved.</span>
+        @* </div> *@
+    </footer>
 </div>
 
-<div id="blazor-error-ui">
-    An unhandled error has occurred.
-    <a href="" class="reload">Reload</a>
-    <a class="dismiss">🗙</a>
-</div>
+@code {
+    // Puedes agregar cualquier lógica adicional o inyectar servicios aquí si es necesario
+}
