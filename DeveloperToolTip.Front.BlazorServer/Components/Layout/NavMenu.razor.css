@@ -114,6 +114,14 @@
     border-bottom: 1px solid #ddd; /* Línea divisoria */
 }
 
+/* Estilo para la imagen del ícono */
+.menu-icon {
+    width: 1.5rem; /* Ajustar el ancho del ícono */
+    height: auto; /* Mantener proporción */
+    display: inline-block; /* Asegurar que se comporte como un elemento en línea */
+    margin-right: 0.5rem; /* Espaciado entre la imagen y el texto */
+}
+
 /* Estilo del título */
 #wiki-title {
     font-weight: bold; /* Texto en negrita */
@@ -122,13 +130,4 @@
     font-size: 1.25rem; /* Ajustar el tamaño de fuente */
 }
 
-/* Icono del menú */
-.govco-list-ul {
-    background-image: url(../icons/list-ul.svg); /* Asegúrate de que la ruta sea correcta */
-    width: 1rem; /* Ancho del ícono */
-    height: 1rem; /* Alto del ícono */
-    display: inline-block;
-    background-repeat: no-repeat;
-    background-size: contain; /* Escala la imagen para ajustarse al contenedor */
-    margin-right: 0.5rem; /* Espaciado entre ícono y texto */
-}
+
