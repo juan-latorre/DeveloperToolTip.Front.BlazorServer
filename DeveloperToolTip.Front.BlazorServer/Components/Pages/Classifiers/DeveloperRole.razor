@@ -21,7 +21,7 @@
 
 @if (Roles != null && Roles.Any())
 {
-    <RadzenDataGrid Data="@Roles" TItem="RoleDto" RowSelect="@OnRowSelect" class="rz-datagrid">
+    <RadzenDataGrid AllowFiltering="true" AllowColumnResize="true" AllowAlternatingRows="false" FilterMode="FilterMode.Advanced" AllowSorting="true" PageSize="5" AllowPaging="true" PagerHorizontalAlign="HorizontalAlign.Center" ShowPagingSummary="true"  Data="@Roles" TItem="RoleDto" RowSelect="@OnRowSelect" class="rz-datagrid">
         <Columns>
             <RadzenDataGridColumn TItem="RoleDto" Property="Id" Title="Role ID" />
             <RadzenDataGridColumn TItem="RoleDto" Property="RoleName" Title="Role Name" />

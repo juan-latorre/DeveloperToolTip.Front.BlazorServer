@@ -60,7 +60,7 @@
     }
 
     .nav-item ::deep .nav-link {
-        color: #d7d7d7;
+        color: #7a7a7a;
         background: none;
         border: none;
         border-radius: 4px;
@@ -71,14 +71,15 @@
         width: 100%;
     }
 
-.nav-item ::deep a.active {
-    background-color: rgba(255,255,255,0.37);
-    color: white;
-}
+    .nav-item ::deep a.active {
+        background-color: rgba(255,255,255,0.37);
+        color: black;
+        font-weight: bold;
+    }
 
 .nav-item ::deep .nav-link:hover {
     background-color: rgba(255,255,255,0.1);
-    color: white;
+    color: #072ad7;
 }
 
 .nav-scrollable {
@@ -104,7 +105,29 @@
     }
 }
 
+/* Estilo general para el contenedor */
+.menu-header {
+    display: flex; /* Usar flexbox para alinear en fila */
+    align-items: center; /* Centrar verticalmente */
+    padding: 0.5rem; /* Espaciado alrededor */
+    background-color: #f8f9fa; /* Color de fondo suave */
+    border-bottom: 1px solid #ddd; /* Línea divisoria */
+}
+
+/* Estilo para la imagen del ícono */
+.menu-icon {
+    width: 1.5rem; /* Ajustar el ancho del ícono */
+    height: auto; /* Mantener proporción */
+    display: inline-block; /* Asegurar que se comporte como un elemento en línea */
+    margin-right: 0.5rem; /* Espaciado entre la imagen y el texto */
+}
+
+/* Estilo del título */
 #wiki-title {
-    color: white; /* Fuente en color blanco */
     font-weight: bold; /* Texto en negrita */
-} 
+    color: black; /* Color del texto */
+    margin: 0; /* Eliminar márgenes predeterminados */
+    font-size: 1.25rem; /* Ajustar el tamaño de fuente */
+}
+
+

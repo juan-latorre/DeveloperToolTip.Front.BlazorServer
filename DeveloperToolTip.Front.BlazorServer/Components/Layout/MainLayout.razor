@@ -2,25 +2,124 @@
 
 <RadzenComponents @rendermode="InteractiveServer" />
 
-<div class="page">
-    <div class="sidebar">
-        @* <TooltipMenu/> *@
-        <NavMenu />
+<div class="main-layout">
+    <!-- Header -->
+    <header class="header">
+        <div class="container-fluid d-flex justify-content-between align-items-center">
+            <div class="logo">
+                <img src="/images/logoDNP.png" alt="App Logo" class="img-fluid" />
+            </div>
+            <h1 class="app-title">Developer ToolTips</h1>
+        </div>
+    </header>
+
+    <!-- Sidebar and Content -->
+    <div class="d-flex">
+        <nav class="sidebar">
+            <NavMenu />
+        </nav>
+        <main class="content flex-grow-1">
+            @Body
+        </main>
     </div>
 
-    <main>
-        <div class="top-row px-4">
-            <a href="https://learn.microsoft.com/aspnet/core/" target="_blank">About</a>
+    <div class="content-example-barra ">
+        <div class="barra-accesibilidad-govco">
+            <button id="botoncontraste" class="icon-contraste" onclick="cambiarContexto()">
+                <span id="titlecontraste">Contraste</span>
+            </button>
+            <button id="botondisminuir" class="icon-reducir" onclick="disminuirTamanio('disminuir')">
+                <span id="titledisminuir">Reducir letra</span>
+            </button>
+            <button id="botonaumentar" class="icon-aumentar" onclick="aumentarTamanio('aumentar')">
+                <span id="titleaumentar">Aumentar letra</span>
+            </button>
         </div>
+        <div class="row m-5">
+            <div id="para-mirar" class="barra-accesibilidad-letra">
+                <br>
+                <p class="titulo-barra-accesibilidad">&nbsp;Ejemplo barra de accesibilidad</p>
+                <p class="descripcion-barra-accesibilidad">Descripción para ver el tamaño de la letra</p>
+            </div>
+        </div>
+    </div>
 
-        <article class="content px-4">
-            @Body
-        </article>
-    </main>
+    @* FOOTER GOVCO *@
+    <div class="govco-footer">
+        <div class="row govco-portales-contenedor m-0">
+            <div class="col-4 govco-footer-logo-portal">
+                <div class="govco-logo-container-portal">
+                    <span class="govco-logo"></span>
+                    <span class="govco-separator"></span>
+                    <span class="govco-co"></span>
+                </div>
+            </div>
+            <div class="col-4 govco-info-datos-portal">
+                <div class="govco-separator-rows"></div>
+                <div class="govco-texto-datos-portal">
+                    <p class="govco-text-header-portal-1">
+                        Nombre completo del portal
+                    </p>
+                    <p>
+                        Dirección: <br class="govco-mostrar">
+                        xxxxxx xxx xxx <br class="govco-mostrar">
+                        Departamento y municipio. <br>
+                        Código Postal: xxxx <br> <br class="govco-mostrar">
+                        Horario de atención: <br class="govco-mostrar">
+                        Lunes a viernes xx:xx a.m. - xx:xx p.m.
+                    </p>
+                </div>
+                <div class="govco-network extramt-network">
+                    <div class="govco-iconContainer">
+                        <span class="icon-portal govco-twitter-square"></span>
+                        <span class="govco-link-portal">"#"</span>
+                    </div>
+                    <div class="govco-iconContainer">
+                        <span class="icon-portal govco-instagram-square"></span>
+                        <span class="govco-link-portal">"#"</span>
+                    </div>
+                    <div class="govco-iconContainer">
+                        <span class="icon-portal govco-facebook-square"></span>
+                        <span class="govco-link-portal">"#"</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-4 govco-info-telefonos">
+                <div class="govco-separator-rows"></div>
+                <div class="govco-texto-telefonos">
+                    <p class="govco-text-header-portal-1">
+                        <span class="govco-phone-alt"></span>
+                        Contacto
+                    </p>
+                    <p>
+                        Teléfono <br class="govco-mostrar"> conmutador: <br class="govco-mostrar-inv">
+                        +57(xx) xxx xx xx <br>
+                        Línea gratuita: 01-800-xxxxxxxx <br>
+                        Línea anticorrupción: 01-800-xxxxxxxx <br>
+                        Correo institucional: <br>
+                        entidad@entidad.gov.co
+                    </p>
+                </div>
+
+                <div class="govco-links-portal-container">
+                    <div class="col-12 m-0 mt-2">
+                        <a class="govco-link-portal" href="#">Políticas</a>
+                        <a class="govco-link-portal" href="#">Mapa del sitio</a>
+                    </div>
+                    <div class="col-12 m-0 mt-2">
+                        <a class="govco-link-portal" href="#">Términos y condiciones</a> <br>
+                    </div>
+                    <div class="col-12 m-0 mt-2">
+                        <a class="govco-link-portal" href="#">Accesibilidad</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>
 
-<div id="blazor-error-ui">
-    An unhandled error has occurred.
-    <a href="" class="reload">Reload</a>
-    <a class="dismiss">🗙</a>
-</div>
+@code {
+    // Puedes agregar cualquier lógica adicional o inyectar servicios aquí si es necesario
+}

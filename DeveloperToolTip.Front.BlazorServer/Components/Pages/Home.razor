@@ -1,21 +1,110 @@
 ﻿@page "/home"
 @inject DialogService _DialogService
+@inject IJSRuntime JSRuntime
 
 @rendermode InteractiveServer
 
 <PageTitle>Home</PageTitle>
 
-<h1>Hello, world!</h1>
+<div id="para-mirar" class="modo_claro-govco">
+    <h1>Developer ToolTips</h1>
+    <p>Welcome to Developer Tooltips.</p>
+</div>
 
-Welcome to your new app.
+<div id="home-content-banner">
+    <!-- Banner -->
+    <div class="banner">
+        <h2>Últimas Noticias</h2>
+        <p>Descubre las últimas novedades y tendencias en el desarrollo de software.</p>
+    </div>
 
-@* <RadzenButton Click="@ButtonClicked" Text="Hello Button">	</RadzenButton> *@
+    <!-- Recursos -->
+    <div class="resources">
+        <h3>Recursos Rápidos</h3>
+        <div class="resource-links">
+            <a class="tarjeta-govco vertical-tarjeta-govco" href="https://getbootstrap.com/" title="Sitio Oficial de estilos CSS de Bootstrap">
+                <div class="container-img-tarjeta-govco">
+                    <img class="image-tarjeta-govco" src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Bootstrap_logo.svg/1280px-Bootstrap_logo.svg.png" alt="Bootstrap">
+                </div>
+                <div class="body-tarjeta-govco">
+                    <span>Bootstrap</span>
+                    <h5>Build fast, responsive sites with Bootstrap</h5>
+                    <p>
+                        Powerful, extensible, and feature-packed frontend toolkit.
+                        Build and customize with Sass, utilize prebuilt grid system and components, and bring projects to life with powerful JavaScript plugins.
+                    </p>
+                </div>
+            </a>
+            <a class="tarjeta-govco vertical-tarjeta-govco" href="https://getbootstrap.com/" title="Sitio Oficial de Componentes Radzen">
+                <div class="container-img-tarjeta-govco">
+                    <img class="image-tarjeta-govco" src="https://archive.org/download/github.com-radzenhq-radzen-blazor_-_2021-01-23_12-01-14/cover.jpg" alt="Radzen">
+                </div>
+                <div class="body-tarjeta-govco">
+                    <span>Radzen</span>
+                    <h5>Radzen Blazor Components</h5>
+                    <p>
+                        A set of 90+ free powerful components for modern Blazor apps.
+                        Open source. Native. Growing.
+                    </p>
+                </div>
+            </a>
+            <a class="tarjeta-govco vertical-tarjeta-govco" href="https://learn.microsoft.com/en-us/aspnet/core/blazor/" title="Sitio Oficial de Documentación MS Blazor">
+                <div class="container-img-tarjeta-govco">
+                    <img class="image-tarjeta-govco" src="https://upload.wikimedia.org/wikipedia/commons/d/d0/Blazor.png" alt="Blazor">
+                </div>
+                <div class="body-tarjeta-govco">
+                    <span>Blazor</span>
+                    <h5>ASP.NET Core Blazor</h5>
+                    <p>Blazor is a .NET frontend web framework that supports both server-side rendering and client interactivity in a single programming model.</p>
+                </div>
+            </a>
+            <a class="tarjeta-govco vertical-tarjeta-govco" href="https://learn.microsoft.com/en-us/sql/?view=sql-server-ver16" title="Sitio Oficial de Documentación MS SQL">
+                <div class="container-img-tarjeta-govco">
+                    <img class="image-tarjeta-govco" src="https://cdn.worldvectorlogo.com/logos/microsoft-sql-server-1.svg" alt="MS SQL">
+                </div>
+                <div class="body-tarjeta-govco">
+                    <span>MS SQL</span>
+                    <h5>Microsoft SQL documentation</h5>
+                    <p>Learn how to use SQL Server and Azure SQL, both on-premises and in the cloud.</p>
+                </div>
+            </a>
+            <a class="tarjeta-govco vertical-tarjeta-govco" href="https://learn.microsoft.com/en-us/dotnet/core/" title=".NET Core Documentación">
+                <div class="container-img-tarjeta-govco">
+                    <img class="image-tarjeta-govco" src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ee/.NET_Core_Logo.svg/2048px-.NET_Core_Logo.svg.png" alt=".Net Core">
+                </div>
+                <div class="body-tarjeta-govco">
+                    <span>.Net Core</span>
+                    <h5>.NET fundamentals documentation</h5>
+                    <p>Learn the fundamentals of .NET, an open-source developer platform for building many different types of applications.</p>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
 
 
 @code {
-	// void ButtonClicked() {
-	// 	_DialogService.Alert("Hi There!");
-	// }
+    private async Task CambiarContexto()
+    {
+        await JSRuntime.InvokeVoidAsync("cambiarContexto");
+    }
 
- 
+    private async Task DisminuirTamanio()
+    {
+        await JSRuntime.InvokeVoidAsync("disminuirTamanio", "disminuir");
+    }
+
+    private async Task AumentarTamanio()
+    {
+        await JSRuntime.InvokeVoidAsync("aumentarTamanio", "aumentar");
+    }
+}
+
+
+@code {
+    // void ButtonClicked() {
+    // 	_DialogService.Alert("Hi There!");
+    // }
+
+
 }
