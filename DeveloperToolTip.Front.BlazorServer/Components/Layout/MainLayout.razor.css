@@ -576,12 +576,13 @@ main {
         font-size: 2rem;
         color: #333;
     }
+
     .banner p {
         font-size: 1.2rem;
         color: #666;
     }
 
-  /*Footer*/
+/*Footer*/
 
 @charset "UTF-8";
 
@@ -839,9 +840,9 @@ p {
         display: none !important;
     }
 }
-    /*Fin Footer*/
+/*Fin Footer*/
 
-    /*Tarjetas Home*/
+/*Tarjetas Home*/
 
 .tarjeta-govco {
     border-radius: 0.625rem;
@@ -955,4 +956,4 @@ p {
             border-color: #3366CC;
         }
 
-        /*Fin Tarjetas Home*/
+/*Fin Tarjetas Home*/
