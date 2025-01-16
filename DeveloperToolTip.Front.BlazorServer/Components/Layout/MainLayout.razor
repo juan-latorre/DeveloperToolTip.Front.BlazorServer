@@ -1,27 +1,62 @@
 ﻿@inherits LayoutComponentBase
 
+
 <RadzenComponents @rendermode="InteractiveServer" />
 
 <div class="main-layout">
     <!-- Header -->
-    <header class="header">
+    @* <header class="header">
         <div class="container-fluid d-flex justify-content-between align-items-center">
             <div class="logo">
                 <img src="/images/logoDNP.png" alt="App Logo" class="img-fluid" />
             </div>
             <h1 class="app-title">Developer ToolTips</h1>
         </div>
+        <NavBarMenu></NavBarMenu>
+    </header> *@
+
+    <header class="header">
+        <!-- Primera fila: Logo y título -->
+        <div class="container-fluid d-flex justify-content-between align-items-center header-top">
+            <div class="logo">
+                <img src="/images/logoDNP.png" alt="App Logo" class="img-fluid" />
+            </div>
+            <h1 class="app-title">Developer ToolTips</h1>
+        </div>
+
+        <!-- Segunda fila: NavBarMenu -->
+        
     </header>
 
+
+        
+
     <!-- Sidebar and Content -->
-    <div class="d-flex">
+   @*  <div class="d-flex">
         <nav class="sidebar">
             <NavMenu />
         </nav>
+        <div class="navbar-container">
+            <NavBarMenu></NavBarMenu>
+        </div>
         <main class="content flex-grow-1">
             @Body
         </main>
-    </div>
+    </div> *@
+
+    <div class="d-flex flex-column min-vh-100">
+        <nav class="navbar">
+            <NavBarMenu></NavBarMenu>
+        </nav>
+        <div class="d-flex">
+            <nav class="sidebar">
+                <NavMenu />
+            </nav>
+            <main class="content flex-grow-1">
+                @Body
+            </main>
+        </div>
+    </div>    
 
     <div class="content-example-barra ">
         <div class="barra-accesibilidad-govco">
@@ -45,6 +80,7 @@
     </div>
 
     @* FOOTER GOVCO *@
+     
     <div class="govco-footer">
         <div class="row govco-portales-contenedor m-0">
             <div class="col-4 govco-footer-logo-portal">
