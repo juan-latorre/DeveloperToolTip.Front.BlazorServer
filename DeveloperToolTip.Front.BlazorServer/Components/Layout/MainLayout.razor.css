@@ -576,12 +576,13 @@ main {
         font-size: 2rem;
         color: #333;
     }
+
     .banner p {
         font-size: 1.2rem;
         color: #666;
     }
 
-  /*Footer*/
+/*Footer*/
 
 @charset "UTF-8";
 
@@ -801,9 +802,6 @@ p {
         display: block !important;
         width: 100% !important;
         order: 1 !important;
-<<<<<<< HEAD
-    }
-=======
     }
 
     .govco-info-telefonos {
@@ -842,9 +840,9 @@ p {
         display: none !important;
     }
 }
-    /*Fin Footer*/
+/*Fin Footer*/
 
-    /*Tarjetas Home*/
+/*Tarjetas Home*/
 
 .tarjeta-govco {
     border-radius: 0.625rem;
@@ -958,5 +956,4 @@ p {
             border-color: #3366CC;
         }
 
-        /*Fin Tarjetas Home*/
->>>>>>> 0f903a284f868baec38d028d4bcdb0bba520deb3
+/*Fin Tarjetas Home*/
