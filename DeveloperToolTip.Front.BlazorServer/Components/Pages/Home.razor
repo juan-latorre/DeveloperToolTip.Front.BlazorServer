@@ -6,22 +6,22 @@
 
 <PageTitle>Home</PageTitle>
 
-<div id="para-mirar" class="modo_claro-govco">
-    <h1>Developer ToolTips</h1>
-    <p>Welcome to Developer Tooltips.</p>
-</div>
+    <div id="para-mirar" class="modo_claro-govco">
+       
+       <h1>Wiki Developer Knowledge</h1>
+       <p>Welcome to Developer Tooltips.</p>
 
-<div id="home-content-banner">
     <!-- Banner -->
     <div class="banner">
         <h2>Últimas Noticias</h2>
         <p>Descubre las últimas novedades y tendencias en el desarrollo de software.</p>
     </div>
+    
 
     <!-- Recursos -->
-    <div class="resources">
+    <div>
         <h3>Recursos Rápidos</h3>
-        <div class="resource-links">
+        <div>
             <a class="tarjeta-govco vertical-tarjeta-govco" href="https://getbootstrap.com/" title="Sitio Oficial de estilos CSS de Bootstrap">
                 <div class="container-img-tarjeta-govco">
                     <img class="image-tarjeta-govco" src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Bootstrap_logo.svg/1280px-Bootstrap_logo.svg.png" alt="Bootstrap">
@@ -48,7 +48,7 @@
                     </p>
                 </div>
             </a>
-            <a class="tarjeta-govco vertical-tarjeta-govco" href="https://learn.microsoft.com/en-us/aspnet/core/blazor/" title="Sitio Oficial de Documentación MS Blazor">
+            <a class="tarjeta-govco vertical-tarjeta-govco" href="https://learn.microsoft.com/en-us/aspnet/core/blazor/" title="Sitio Oficial de Documentación MS Blazor" target="_blank">
                 <div class="container-img-tarjeta-govco">
                     <img class="image-tarjeta-govco" src="https://upload.wikimedia.org/wikipedia/commons/d/d0/Blazor.png" alt="Blazor">
                 </div>
@@ -58,7 +58,7 @@
                     <p>Blazor is a .NET frontend web framework that supports both server-side rendering and client interactivity in a single programming model.</p>
                 </div>
             </a>
-            <a class="tarjeta-govco vertical-tarjeta-govco" href="https://learn.microsoft.com/en-us/sql/?view=sql-server-ver16" title="Sitio Oficial de Documentación MS SQL">
+            <a class="tarjeta-govco vertical-tarjeta-govco" href="https://learn.microsoft.com/en-us/sql/?view=sql-server-ver16" title="Sitio Oficial de Documentación MS SQL" target="_blank">
                 <div class="container-img-tarjeta-govco">
                     <img class="image-tarjeta-govco" src="https://cdn.worldvectorlogo.com/logos/microsoft-sql-server-1.svg" alt="MS SQL">
                 </div>
@@ -68,7 +68,7 @@
                     <p>Learn how to use SQL Server and Azure SQL, both on-premises and in the cloud.</p>
                 </div>
             </a>
-            <a class="tarjeta-govco vertical-tarjeta-govco" href="https://learn.microsoft.com/en-us/dotnet/core/" title=".NET Core Documentación">
+            <a class="tarjeta-govco vertical-tarjeta-govco" href="https://learn.microsoft.com/en-us/dotnet/core/" title=".NET Core Documentación" target="_blank">
                 <div class="container-img-tarjeta-govco">
                     <img class="image-tarjeta-govco" src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ee/.NET_Core_Logo.svg/2048px-.NET_Core_Logo.svg.png" alt=".Net Core">
                 </div>
@@ -78,10 +78,19 @@
                     <p>Learn the fundamentals of .NET, an open-source developer platform for building many different types of applications.</p>
                 </div>
             </a>
+            <a class="tarjeta-govco vertical-tarjeta-govco" href="https://git-scm.com/doc" title="git Documentación" target="_blank">
+                <div class="container-img-tarjeta-govco">
+                    <img class="image-tarjeta-govco" src="https://git-scm.com/images/logo@2x.png" alt="Git">
+                </div>
+                <div class="body-tarjeta-govco">
+                    <span>Git --fast-version-control</span>
+                    <h5>Git Reference Manual</h5>
+                    <p>The official and comprehensive man pages that are included in the Git package itself.</p>
+                </div>
+            </a>
         </div>
     </div>
 </div>
-
 
 @code {
     private async Task CambiarContexto()
