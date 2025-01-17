@@ -1,4 +1,6 @@
-﻿document.addEventListener("keyup", detectTabKey);
+﻿/*Accesibilidad*/
+
+document.addEventListener("keyup", detectTabKey);
 
 function detectTabKey(e) {
     if (e.keyCode == 9) {
@@ -104,4 +106,25 @@ function aumentarTamanio(operador) {
 function tamanioElemento(element) {
     const tamanioParrafo = window.getComputedStyle(element, null).getPropertyValue('font-size');
     return parseFloat(tamanioParrafo);
+}
+
+/*Cabecera*/
+
+window.addEventListener("load", function () {
+    initHeader();
+
+});
+
+function initHeader() {
+    initTopBar();
+}
+
+// Barra superior
+function initTopBar() {
+    const translateElement = document.querySelector(".idioma-icon-barra-superior-govco");
+    translateElement.addEventListener("click", translate, false);
+
+    function translate() {
+        // ... // Implementar traducción
+    }
 }

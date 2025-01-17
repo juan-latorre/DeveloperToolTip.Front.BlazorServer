@@ -1,161 +1,27 @@
 ﻿@inherits LayoutComponentBase
 
-
 <RadzenComponents @rendermode="InteractiveServer" />
 
-<div class="main-layout">
+<div class="main-layout d-flex flex-column min-vh-100">
+  
     <!-- Header -->
-    @* <header class="header">
-        <div class="container-fluid d-flex justify-content-between align-items-center">
-            <div class="logo">
-                <img src="/images/logoDNP.png" alt="App Logo" class="img-fluid" />
-            </div>
-            <h1 class="app-title">Developer ToolTips</h1>
-        </div>
-        <NavBarMenu></NavBarMenu>
-    </header> *@
+    <HeaderComponent></HeaderComponent>
 
-    <header class="header">
-        <!-- Primera fila: Logo y título -->
-        <div class="container-fluid d-flex justify-content-between align-items-center header-top">
-            <div class="logo">
-                <img src="/images/logoDNP.png" alt="App Logo" class="img-fluid" />
-            </div>
-            <h1 class="app-title">Developer ToolTips</h1>
-        </div>
-
-        <!-- Segunda fila: NavBarMenu -->
-        
-    </header>
-
-
-        
-
-    <!-- Sidebar and Content -->
-   @*  <div class="d-flex">
-        <nav class="sidebar">
-            <NavMenu />
-        </nav>
-        <div class="navbar-container">
-            <NavBarMenu></NavBarMenu>
-        </div>
+    <!-- Body -->
+    <div class="d-flex flex-grow-1">
         <main class="content flex-grow-1">
             @Body
         </main>
-    </div> *@
-
-    <div class="d-flex flex-column min-vh-100">
-        <nav class="navbar">
-            <NavBarMenu></NavBarMenu>
-        </nav>
-        <div class="d-flex">
-            <nav class="sidebar">
-                <NavMenu />
-            </nav>
-            <main class="content flex-grow-1">
-                @Body
-            </main>
-        </div>
-    </div>    
-
-    <div class="content-example-barra ">
-        <div class="barra-accesibilidad-govco">
-            <button id="botoncontraste" class="icon-contraste" onclick="cambiarContexto()">
-                <span id="titlecontraste">Contraste</span>
-            </button>
-            <button id="botondisminuir" class="icon-reducir" onclick="disminuirTamanio('disminuir')">
-                <span id="titledisminuir">Reducir letra</span>
-            </button>
-            <button id="botonaumentar" class="icon-aumentar" onclick="aumentarTamanio('aumentar')">
-                <span id="titleaumentar">Aumentar letra</span>
-            </button>
-        </div>
-        <div class="row m-5">
-            <div id="para-mirar" class="barra-accesibilidad-letra">
-                <br>
-                <p class="titulo-barra-accesibilidad">&nbsp;Ejemplo barra de accesibilidad</p>
-                <p class="descripcion-barra-accesibilidad">Descripción para ver el tamaño de la letra</p>
-            </div>
-        </div>
     </div>
-
-    @* FOOTER GOVCO *@
+    
+    <!-- Barra de Accesibilidad -->
+    <AccesibilidadComponent></AccesibilidadComponent>
      
-    <div class="govco-footer">
-        <div class="row govco-portales-contenedor m-0">
-            <div class="col-4 govco-footer-logo-portal">
-                <div class="govco-logo-container-portal">
-                    <span class="govco-logo"></span>
-                    <span class="govco-separator"></span>
-                    <span class="govco-co"></span>
-                </div>
-            </div>
-            <div class="col-4 govco-info-datos-portal">
-                <div class="govco-separator-rows"></div>
-                <div class="govco-texto-datos-portal">
-                    <p class="govco-text-header-portal-1">
-                        Nombre completo del portal
-                    </p>
-                    <p>
-                        Dirección: <br class="govco-mostrar">
-                        xxxxxx xxx xxx <br class="govco-mostrar">
-                        Departamento y municipio. <br>
-                        Código Postal: xxxx <br> <br class="govco-mostrar">
-                        Horario de atención: <br class="govco-mostrar">
-                        Lunes a viernes xx:xx a.m. - xx:xx p.m.
-                    </p>
-                </div>
-                <div class="govco-network extramt-network">
-                    <div class="govco-iconContainer">
-                        <span class="icon-portal govco-twitter-square"></span>
-                        <span class="govco-link-portal">"#"</span>
-                    </div>
-                    <div class="govco-iconContainer">
-                        <span class="icon-portal govco-instagram-square"></span>
-                        <span class="govco-link-portal">"#"</span>
-                    </div>
-                    <div class="govco-iconContainer">
-                        <span class="icon-portal govco-facebook-square"></span>
-                        <span class="govco-link-portal">"#"</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-4 govco-info-telefonos">
-                <div class="govco-separator-rows"></div>
-                <div class="govco-texto-telefonos">
-                    <p class="govco-text-header-portal-1">
-                        <span class="govco-phone-alt"></span>
-                        Contacto
-                    </p>
-                    <p>
-                        Teléfono <br class="govco-mostrar"> conmutador: <br class="govco-mostrar-inv">
-                        +57(xx) xxx xx xx <br>
-                        Línea gratuita: 01-800-xxxxxxxx <br>
-                        Línea anticorrupción: 01-800-xxxxxxxx <br>
-                        Correo institucional: <br>
-                        entidad@entidad.gov.co
-                    </p>
-                </div>
-
-                <div class="govco-links-portal-container">
-                    <div class="col-12 m-0 mt-2">
-                        <a class="govco-link-portal" href="#">Políticas</a>
-                        <a class="govco-link-portal" href="#">Mapa del sitio</a>
-                    </div>
-                    <div class="col-12 m-0 mt-2">
-                        <a class="govco-link-portal" href="#">Términos y condiciones</a> <br>
-                    </div>
-                    <div class="col-12 m-0 mt-2">
-                        <a class="govco-link-portal" href="#">Accesibilidad</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    <!-- Footer -->
+    <FooterComponent></FooterComponent>
 
 </div>
 
 @code {
-    // Puedes agregar cualquier lógica adicional o inyectar servicios aquí si es necesario
+    // Lógica adicional aquí
 }
