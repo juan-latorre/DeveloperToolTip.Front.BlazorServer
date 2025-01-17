@@ -2,29 +2,33 @@
 
 @inject IGoogleNewsService _IGoogleNewsService;
 
-<h3>Google News</h3>
+<h2>Google Technology News</h2>
+<p class="text-muted">Mostrando @newsList.Count() </p>
 
-<div class="news-banner">
-    @if (news == null)
-    {
-        <p>Loading news...</p>
-    }
-    else
-    {
-        foreach (var item in news.Take(5)) 
-        {
-            <div class="news-item">
-                <img src="@item.ImageUrl" alt="News Image" class="news-image" />
-                <div class="news-content">
-                    <a href="@item.Link" target="_blank">
-                        <h5>@item.Title</h5>
-                    </a>
-                    <p>@item.PublishedDate</p>
-                </div>
-            </div>
-        }
-    }
+<div class="scrollable-container mt-4">
+@foreach (var news in newsList)
+{
+<div class="container mt-1">
+    <div class="row border rounded p-sm-0 align-items-center">
+        <!-- Imagen -->
+            <div class="col-md-3 image-container">
+            <img src="@news.ImageUrl" alt="News Image" class="img-fluid rounded">
+        </div>
+        <!-- Detalles de la noticia -->
+        <div class="col-md-9">
+            <p class="mb-3">@news.Title</p>
+            <p class="mb-1"><strong>Published Date:</strong> @news.PublishedDate</p>
+            <p class="mb-1"><strong>Link:</strong> <a href="@news.Link" target="_blank" class="text-decoration-none">Go to the News</a></p>
+            <p class="mb-1"><strong>Source:</strong> @news.Source</p>
+            <p class="mb-0"><strong>SourceUrl:</strong> <a href="@news.SourceUrl" target="_blank" class="text-decoration-none">Visit the Source</a></p>
+        </div>
+    </div>
 </div>
+}
+</div>
+
+
+
 
 
 
