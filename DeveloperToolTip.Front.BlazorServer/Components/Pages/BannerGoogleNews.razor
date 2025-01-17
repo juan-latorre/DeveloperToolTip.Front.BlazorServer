@@ -1,0 +1,24 @@
+﻿@using DeveloperToolTip.Front.BlazorServer.Services
+
+@inject IGoogleNewsService _IGoogleNewsService;
+
+<h3>Google News</h3>
+
+@if (news == null)
+{
+    <p>Loading...</p>
+}
+else
+{
+    <ul>
+        @foreach (var article in news)
+        {
+            <li>
+                <a href="@article.Link" target="_blank">@article.Title</a> <br />
+                <small>@article.PublishedDate</small>
+            </li>
+        }
+    </ul>
+}
+
+

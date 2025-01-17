@@ -27,6 +27,9 @@ namespace DeveloperToolTip.Front.BlazorServer.Services.Extensions
             {
                 client.BaseAddress = new Uri(apiBaseUrl);
             });
+
+            // Servicio de Google News (sin URL base configurada en appsettings.json)
+            services.AddHttpClient<IGoogleNewsService, GoogleNewsService>();
         }
     }
 }
