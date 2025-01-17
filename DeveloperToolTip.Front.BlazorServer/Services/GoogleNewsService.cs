@@ -1,4 +1,5 @@
-﻿using System.Xml.Linq;
+﻿using System.Xml;
+using System.Xml.Linq;
 using DeveloperToolTip.Front.BlazorServer.Models;
 
 namespace DeveloperToolTip.Front.BlazorServer.Services
@@ -29,13 +30,18 @@ namespace DeveloperToolTip.Front.BlazorServer.Services
                 // Extraer los elementos "item" y mapear al DTO
                 foreach (var item in xml.Descendants("item"))
                 {
-                    
+                    var sourceElement = item.Element("source");
+                    string? sourceUrl = sourceElement?.Attribute("url")?.Value; 
+                    string? sourceName = sourceElement?.Value; 
+
                     var news = new GoogleNewsDto
                     {
                         Title = item.Element("title")?.Value,
                         Link = item.Element("link")?.Value,
                         PublishedDate = item.Element("pubDate")?.Value,
-                        ImageUrl = imageUrl 
+                        Source = sourceName,
+                        SourceUrl = sourceUrl,
+                        ImageUrl = imageUrl
                     };
                     newsList.Add(news);
                 }

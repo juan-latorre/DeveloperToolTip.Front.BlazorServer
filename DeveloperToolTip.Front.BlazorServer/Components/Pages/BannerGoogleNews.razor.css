@@ -1,26 +1,11 @@
-﻿.news-banner {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    padding: 20px;
-    background-color: #f9f9f9;
+﻿.scrollable-container {
+    max-height: 200px; /* Ajusta la altura según sea necesario */
+    overflow-y: auto; /* Habilita el scroll vertical */
+    border: 1px solid #ddd; /* Opcional, para delimitar el área scrollable */
+    padding-right: 10px;
 }
 
-.news-item {
-    display: flex;
-    gap: 10px;
-    align-items: center;
-    border-bottom: 1px solid #ddd;
-    padding-bottom: 10px;
-}
-
-.news-image {
-    width: 50px;
-    height: 50px;
-    object-fit: cover;
-    border-radius: 5px;
-}
-
-.news-content {
-    flex-grow: 1;
+.image-container img {
+    width: 70px; /* Ajusta el tamaño de la imagen */
+    height: auto; /* Mantiene la proporción */
 }
