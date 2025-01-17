@@ -25,15 +25,17 @@ namespace DeveloperToolTip.Front.BlazorServer.Services
 
                 // Parsear el XML
                 var xml = XDocument.Parse(response);
-
+                var imageUrl = xml.Descendants("image").Elements("url").FirstOrDefault()?.Value;
                 // Extraer los elementos "item" y mapear al DTO
                 foreach (var item in xml.Descendants("item"))
                 {
+                    
                     var news = new GoogleNewsDto
                     {
                         Title = item.Element("title")?.Value,
                         Link = item.Element("link")?.Value,
-                        PublishedDate = item.Element("pubDate")?.Value
+                        PublishedDate = item.Element("pubDate")?.Value,
+                        ImageUrl = imageUrl 
                     };
                     newsList.Add(news);
                 }

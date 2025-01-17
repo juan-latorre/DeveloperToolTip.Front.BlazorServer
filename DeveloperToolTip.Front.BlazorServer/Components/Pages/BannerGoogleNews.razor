@@ -4,21 +4,27 @@
 
 <h3>Google News</h3>
 
-@if (news == null)
-{
-    <p>Loading...</p>
-}
-else
-{
-    <ul>
-        @foreach (var article in news)
+<div class="news-banner">
+    @if (news == null)
+    {
+        <p>Loading news...</p>
+    }
+    else
+    {
+        foreach (var item in news.Take(5)) 
         {
-            <li>
-                <a href="@article.Link" target="_blank">@article.Title</a> <br />
-                <small>@article.PublishedDate</small>
-            </li>
+            <div class="news-item">
+                <img src="@item.ImageUrl" alt="News Image" class="news-image" />
+                <div class="news-content">
+                    <a href="@item.Link" target="_blank">
+                        <h5>@item.Title</h5>
+                    </a>
+                    <p>@item.PublishedDate</p>
+                </div>
+            </div>
         }
-    </ul>
-}
+    }
+</div>
+
 
 
