@@ -26,13 +26,13 @@ namespace DeveloperToolTip.Front.BlazorServer.Services
 
                 // Parsear el XML
                 var xml = XDocument.Parse(response);
-                var imageUrl = xml.Descendants("image").Elements("url").FirstOrDefault()?.Value;
+                //var imageUrl = xml.Descendants("image").Elements("url").FirstOrDefault()?.Value;
                 // Extraer los elementos "item" y mapear al DTO
                 foreach (var item in xml.Descendants("item"))
                 {
                     var sourceElement = item.Element("source");
                     string? sourceUrl = sourceElement?.Attribute("url")?.Value; 
-                    string? sourceName = sourceElement?.Value; 
+                    string? sourceName = sourceElement?.Value;
 
                     var news = new GoogleNewsDto
                     {
@@ -41,7 +41,7 @@ namespace DeveloperToolTip.Front.BlazorServer.Services
                         PublishedDate = item.Element("pubDate")?.Value,
                         Source = sourceName,
                         SourceUrl = sourceUrl,
-                        ImageUrl = imageUrl
+                        ImageUrl = GetClearbitLogo(sourceUrl) ?? GetGoogleFavicon(sourceUrl) //imageUrl
                     };
                     newsList.Add(news);
                 }
@@ -53,5 +53,36 @@ namespace DeveloperToolTip.Front.BlazorServer.Services
 
             return newsList;
         }
+
+        private string? GetClearbitLogo(string? domainUrl)
+        {
+            if (string.IsNullOrEmpty(domainUrl)) return null;
+
+            try
+            {
+                var domain = new Uri(domainUrl).Host;
+                return $"https://logo.clearbit.com/{domain}";
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        private string GetGoogleFavicon(string? domainUrl)
+        {
+            if (string.IsNullOrEmpty(domainUrl)) return string.Empty;
+
+            try
+            {
+                var domain = new Uri(domainUrl).Host;
+                return $"https://www.google.com/s2/favicons?domain={domain}";
+            }
+            catch
+            {
+                return string.Empty;
+            }
+        }
+
     }
 }
