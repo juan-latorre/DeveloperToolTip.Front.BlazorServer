@@ -1,8 +1,13 @@
-﻿.scrollable-container {
-    max-height: 200px; /* Ajusta la altura según sea necesario */
-    overflow-y: auto; /* Habilita el scroll vertical */
-    border: 1px solid #ddd; /* Opcional, para delimitar el área scrollable */
-    padding-right: 10px;
+﻿/*.scrollable-container {
+    max-height: 200px;*/ /* Ajusta la altura según sea necesario */
+    /*overflow-y: auto;*/ /* Habilita el scroll vertical */
+    /*border: 1px solid #ddd;*/ /* Opcional, para delimitar el área scrollable */
+    /*padding-right: 10px;
+}*/
+
+.scrollable-container {
+    max-width: 100%;
+    margin: 0 auto;
 }
 
 .image-container img {
