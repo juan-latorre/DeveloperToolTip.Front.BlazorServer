@@ -7,9 +7,10 @@
 @inject ICategoryService _ICategoryService
 @inject DialogService DialogService
 @inject NotificationService NotificationService
+@inject DialogService _DialogService
+@inject IJSRuntime JSRuntime
 
 <h3>Topic Categories</h3>
-<p></p>
 
 <div class="row mb-3">
     <div class="col">
@@ -17,25 +18,31 @@
     </div>
 </div>
 
-@if (Categories != null && Categories.Any())
-{
-    <RadzenDataGrid AllowFiltering="true" AllowColumnResize="true" AllowAlternatingRows="false" FilterMode="FilterMode.Advanced" AllowSorting="true" PageSize="5" AllowPaging="true" PagerHorizontalAlign="HorizontalAlign.Center" ShowPagingSummary="true" Data="@Categories" TItem="TopicCategoryDto" RowSelect="@OnRowSelect" class="rz-datagrid">
-        <Columns>
-            <RadzenDataGridColumn TItem="TopicCategoryDto" Property="Id" Title="Category ID" />
-            <RadzenDataGridColumn TItem="TopicCategoryDto" Property="CategoryName" Title="Category Name" />
-            <RadzenDataGridColumn TItem="TopicCategoryDto" Title="Actions" TextAlign="TextAlign.Center">
-                <Template Context="category">
-                    <RadzenButton Icon="edit" ButtonStyle="ButtonStyle.Warning" Click="@(() => OpenEditDialog(category))" />
-                    <RadzenButton Icon="delete" ButtonStyle="ButtonStyle.Danger" Click="@(() => OpenDeleteDialog(category))" Style="margin-left: 10px;" />
-                </Template>
-            </RadzenDataGridColumn>
-        </Columns>
-    </RadzenDataGrid>
-}
-else
-{
-    <RadzenAlert AlertStyle="AlertStyle.Info" ShowIcon="true">
-        No Categories available!
-    </RadzenAlert>
-}
+<div id="para-mirar" class="modo_claro-govco">
+    
+    @if (Categories != null && Categories.Any())
+    {
+        <RadzenDataGrid AllowFiltering="true" AllowColumnResize="true" AllowAlternatingRows="false" FilterMode="FilterMode.Advanced" AllowSorting="true" PageSize="5" AllowPaging="true" PagerHorizontalAlign="HorizontalAlign.Center" ShowPagingSummary="true" Data="@Categories" TItem="TopicCategoryDto" RowSelect="@OnRowSelect" class="rz-datagrid">
+            <Columns>
+                <RadzenDataGridColumn TItem="TopicCategoryDto" Property="Id" Title="Category ID" />
+                <RadzenDataGridColumn TItem="TopicCategoryDto" Property="CategoryName" Title="Category Name" />
+                <RadzenDataGridColumn TItem="TopicCategoryDto" Title="Actions" TextAlign="TextAlign.Center">
+                    <Template Context="category">
+                        <RadzenButton Icon="edit" ButtonStyle="ButtonStyle.Warning" Click="@(() => OpenEditDialog(category))" />
+                        <RadzenButton Icon="delete" ButtonStyle="ButtonStyle.Danger" Click="@(() => OpenDeleteDialog(category))" Style="margin-left: 10px;" />
+                    </Template>
+                </RadzenDataGridColumn>
+            </Columns>
+        </RadzenDataGrid>
+    }
+    else
+    {
+        <RadzenAlert AlertStyle="AlertStyle.Info" ShowIcon="true">
+            No Categories available!
+        </RadzenAlert>
+    }
+
+</div>
+
+
 
