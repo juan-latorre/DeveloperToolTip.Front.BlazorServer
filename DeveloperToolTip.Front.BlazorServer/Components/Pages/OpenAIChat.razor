@@ -1,0 +1,24 @@
+﻿@page "/OpenAIChat"
+
+@using DeveloperToolTip.Front.BlazorServer.Services
+
+@inject IOpenAIService _IOpenAIService;
+
+<h3>OpenAI Chat</h3>
+<textarea @bind="UserPrompt" placeholder="Escribe tu pregunta..."></textarea>
+<button @onclick="GetResponseAsync">Enviar</button>
+
+<div>
+    <h4>Respuesta:</h4>
+    <p>@ResponseText</p>
+</div>
+
+@code {
+    private string UserPrompt = string.Empty;
+    private string ResponseText = string.Empty;
+
+    private async Task GetResponseAsync()
+    {
+        ResponseText = "Hola Chatgpt!";//await _IOpenAIService.SendRequestAsync(UserPrompt);
+    }
+}
