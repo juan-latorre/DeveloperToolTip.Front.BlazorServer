@@ -33,7 +33,7 @@ namespace DeveloperToolTip.Front.BlazorServer.Services.Extensions
 
             //Servicio OpenAI
             var apiKey = configuration["OpenAI:ApiKey"];
-            var urlAI = configuration["OpenAI:Url"];
+            var urlAI = configuration["OpenAI:UrlAI"];
             if (string.IsNullOrEmpty(apiKey) || string.IsNullOrEmpty(urlAI))
             {
                 throw new ArgumentNullException("OpenAI configuration is missing ApiKey or Url");

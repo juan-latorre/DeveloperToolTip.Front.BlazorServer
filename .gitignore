@@ -35,3 +35,4 @@ Thumbs.db
 # Archivos de configuración
 
 appsettings.json
+/DeveloperToolTip.Front.BlazorServer/appsettings.json
