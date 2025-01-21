@@ -4,21 +4,48 @@
 
 @inject IOpenAIService _IOpenAIService;
 
-<h3>OpenAI Chat</h3>
-<textarea @bind="UserPrompt" placeholder="Escribe tu pregunta..."></textarea>
-<button @onclick="GetResponseAsync">Enviar</button>
+<div class="container mt-4">
+    <h2 class="text-center mb-4">OpenAI Chat</h2>
 
-<div>
-    <h4>Respuesta:</h4>
-    <p>@ResponseText</p>
+    <!-- Formulario de entrada -->
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <form @onsubmit="HandleChatAsync">
+                <div class="mb-3">
+                    <label for="userInput" class="form-label">Pregunta</label>
+                    <textarea id="userInput" class="form-control" rows="3" @bind="UserInput" placeholder="Escribe tu pregunta..."></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Enviar</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Respuesta del chatbot -->
+    @if (!string.IsNullOrEmpty(Response))
+    {
+        <div class="card shadow-sm mt-4">
+            <div class="card-header bg-info text-white">
+                Respuesta de OpenAI
+            </div>
+            <div class="card-body">
+                <p class="card-text">@Response</p>
+            </div>
+        </div>
+    }
 </div>
 
 @code {
-    private string UserPrompt = string.Empty;
-    private string ResponseText = string.Empty;
+    private string UserInput { get; set; } = string.Empty;
+    private string Response { get; set; } = string.Empty;
 
-    private async Task GetResponseAsync()
+    private async Task HandleChatAsync()
     {
-        ResponseText = "Hola Chatgpt!";//await _IOpenAIService.SendRequestAsync(UserPrompt);
+        if (!string.IsNullOrEmpty(UserInput))
+        {
+            // Aquí llamamos al servicio de OpenAI para obtener la respuesta
+            //"Respuesta generada por OpenAI API!";
+            Response = await _IOpenAIService.SendRequestAsync(UserInput);
+            UserInput = string.Empty; // Limpiar el campo de entrada
+        }
     }
 }
