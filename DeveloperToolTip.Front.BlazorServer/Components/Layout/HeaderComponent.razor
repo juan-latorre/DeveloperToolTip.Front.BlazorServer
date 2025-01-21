@@ -1,54 +1,31 @@
 ﻿<div class="container-fluid">
     <nav class="navbar navbar-expand-lg barra-superior-govco" aria-label="Barra superior">
-        <a href="https://www.gov.co/" target="_blank" aria-label="Portal del Estado Colombiano - GOV.CO"></a>
-        @* <button class="idioma-icon-barra-superior-govco float-right" aria-label="Button to change the language of the page to English"></button> *@
+        <a href="https://www.gov.co/" target="_blank" aria-label="Portal del Estado Colombiano - GOV.CO"></a>       
     </nav>
-    <div class="logo-aut-header-govco">
-        @* <a href="#" class="link-login-header-govco">Iniciar sesión</a> *@
+    <div class="logo-aut-header-govco">        
         <div class="container-logo-header-govco">
-            <span class="logo-header-govco"></span>
-            @* <div class="container-search-header-govco">
-            <!-- Search -->
-            <div class="search-govco">
-                <div class="bar-search-govco">
-                    <input type="text" placeholder="Buscar por componente" class="input-search-govco" aria-label="Buscador" />
-                    <button class="icon-search-govco icon-close-search-govco" aria-label="Limpiar"></button>
-                    <div class="icon-search-govco search-icon-search-govco" aria-hidden="true"></div>
-                </div>
-                <div class="container-options-search-govco">
-                    <div class="options-search-govco">
-                        <ul>
-                            <li>
-                                <a href="#" tabindex="-1">Sugerencia de búsqueda con la palabra <strong>Componente 1</strong></a>
-                            </li>
-                            <li>
-                                <a href="#" tabindex="-1">Sugerencia de búsqueda con la palabra <strong>Componente 1</strong></a>
-                            </li>
-                            <li>
-                                <a href="#" tabindex="-1">Sugerencia de búsqueda con la palabra <strong>Componente 1</strong></a>
-                            </li>
-                            <li>
-                                <a href="#" tabindex="-1">Sugerencia de búsqueda con la palabra <strong>Componente 1</strong></a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <!-- Search -->
-        </div> *@
+            <span class="logo-header-govco"></span>         
         </div>
     </div>
     <!-- Menu de Navegacion -->
     <div class="container-navbar-menu-govco blue-menu-govco">
-        <nav class="navbar navbar-expand-lg navbar-menu-govco" role="navigation" aria-label="Menú ejemplo entidad">
-            <div class="container-fluid container-second-navbar-menu-govco">
+        <nav class="navbar navbar-expand-lg navbar-menu-govco" role="navigation" aria-label="Menú principal">
+            @* <div class="container-fluid container-second-navbar-menu-govco"> *@
+            <div class="container-fluid">
+                
+                <!-- Botón del menú responsivo -->
+                @* <button class="navbar-toggler button-responsive-menu-govco" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="icon-bars-menu-govco"></span>
+                </button>
+ *@
                 <a class="navbar-brand navbar-toggler icon-entidad-menu-govco" href="#"></a>
                 <button class="navbar-toggler button-responsive-menu-govco collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="icon-bars-menu-govco"></span>
                 </button>
+                
                 <div class="collapse navbar-collapse navbar-collapse-menu-govco" id="navbarScroll">
                     <div class="container-search-icon-menu-govco navbar-toggler">
-                        <a class="icon-user-alt-menu-govco" href="#"></a>
+                        <a class="icon-user-alt-menu-govco" href="home"></a>
                     </div>
                     <ul class="navbar-nav navbar-nav-menu-govco ms-auto">
                         <li class="nav-item">
@@ -99,5 +76,4 @@
         </nav>
     </div>
     <!-- Menu de Navegacion -->
-
 </div>
