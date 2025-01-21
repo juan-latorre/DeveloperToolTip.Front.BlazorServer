@@ -48,6 +48,11 @@ namespace DeveloperToolTip.Front.BlazorServer.Services
 
                 // Manejar respuestas no exitosas
                 var errorContent = await response.Content.ReadAsStringAsync();
+                var errorCompleteMsg = $"OpenAI API request failed with status code {response.StatusCode}. Details: {errorContent}";
+                if (string.IsNullOrEmpty(errorContent))
+                {
+                    return errorCompleteMsg;
+                }
                 throw new HttpRequestException($"OpenAI API request failed with status code {response.StatusCode}. Details: {errorContent}");
             }
             catch (HttpRequestException httpEx)
