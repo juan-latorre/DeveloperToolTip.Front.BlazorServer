@@ -91,28 +91,3 @@
         
 </div>
 
-@code {
-    private async Task CambiarContexto()
-    {
-        await JSRuntime.InvokeVoidAsync("cambiarContexto");
-    }
-
-    private async Task DisminuirTamanio()
-    {
-        await JSRuntime.InvokeVoidAsync("disminuirTamanio", "disminuir");
-    }
-
-    private async Task AumentarTamanio()
-    {
-        await JSRuntime.InvokeVoidAsync("aumentarTamanio", "aumentar");
-    }
-}
-
-
-@code {
-    // void ButtonClicked() {
-    // 	_DialogService.Alert("Hi There!");
-    // }
-
-
-}
