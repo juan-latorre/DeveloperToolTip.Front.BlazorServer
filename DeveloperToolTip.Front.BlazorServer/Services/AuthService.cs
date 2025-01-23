@@ -29,10 +29,20 @@ namespace DeveloperToolTip.Front.BlazorServer.Services
         }
 
         // Auth: Logout
-        public async Task<bool> LogoutAsync(string token)
+        public async Task LogoutAsync(string token)
         {
-            var response = await _httpClient.PostAsync("Auth/logout", null);
-            return response.IsSuccessStatusCode;
+            if (string.IsNullOrEmpty(token))
+                throw new ArgumentException("Token cannot be null or empty", nameof(token));
+
+            var request = new HttpRequestMessage(HttpMethod.Post, "auth/logout");
+            request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
+
+            var response = await _httpClient.SendAsync(request);
+
+            if (!response.IsSuccessStatusCode)
+            {
+                throw new HttpRequestException($"Logout failed with status code: {response.StatusCode}");
+            }
         }
 
         // Auth: Get Active Session
