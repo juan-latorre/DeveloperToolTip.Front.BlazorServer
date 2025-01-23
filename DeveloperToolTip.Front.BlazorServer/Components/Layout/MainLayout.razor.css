@@ -37,12 +37,19 @@ main {
     flex: 1;
 }
 
+.body-diego {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+    text-align: center;
+    background-color: red;
+}
 
 /* Main Layout */
 .main-layout {
     display: flex;
-    flex-direction: column;
-    height: 100vh;
+    flex-direction: column;  
 }
 
 /* Sidebar Styles */
@@ -85,10 +92,25 @@ main {
     display: flex;
     flex-direction: column; /* Organiza los elementos en una columna */
     gap: 1rem; /* Espaciado entre el banner y los recursos */
+    padding: 1rem 2rem; /* Agrega espacio dentro del contenedor */
+    margin-top: 4rem; /* Da espacio debajo de la barra de opciones */
+}
+
+.tabla-container {
+    margin-top: 1rem; /* Asegura espacio entre el encabezado y la tabla */
+    overflow-x: auto; /* Permite scroll horizontal en dispositivos pequeños */
+    z-index: 0; /* Por debajo del menú desplegable */
+    position: relative;
+}
+
+.rz-datagrid {
+    width: 100%; /* Asegura que la tabla ocupe todo el ancho disponible */
+    margin: 0 auto; /* Centra la tabla */
+    z-index: 0; /* Asegura que no se superponga al menú */
 }
 
 /* Responsive Design */
-@media (max-width: 768px) {
+@media (max-width: 991px) {
     .header {
         flex-direction: column;
         align-items: flex-start;
@@ -105,6 +127,15 @@ main {
     .content {
         padding: 10px;
     }
+
+    .seccion-principal {
+        margin-top: 5rem; /* Mayor espacio para dispositivos móviles */
+    }
+
+    .tabla-container {
+        margin-top: 2rem; /* Espacio adicional en dispositivos móviles */
+    }
+}
 }
 
 /* Contenedor principal Home */
