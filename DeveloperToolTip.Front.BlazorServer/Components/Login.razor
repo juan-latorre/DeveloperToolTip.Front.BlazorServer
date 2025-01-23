@@ -4,9 +4,10 @@
 @rendermode InteractiveServer
 
 @inject IAuthService AuthService
-
 @inject Blazored.LocalStorage.ILocalStorageService LocalStorage
 @inject IJSRuntime js
+@inject IHttpClientFactory HttpClientFactory
+
 @* @inject NavigationManager NavigationManager *@
 
 @* <h1 class="text-muted">Render @(OperatingSystem.IsBrowser() ? "Wasm" : "Server")</h1> *@
@@ -45,9 +46,11 @@
 
     private async Task HandleLogin()
     {
+        // Obtener dirección IP
+        loginModel.IpAdress = await GetClientIpAddressAsync();
+
         try
         {
-            //var token = await ApiClientService.LoginAsync(loginModel);
             var token = await AuthService.Login(loginModel);
 
             if (!string.IsNullOrEmpty(token))
@@ -66,6 +69,20 @@
         catch (Exception ex)
         {
             errorMessage = $"An error occurred: {ex.Message}";
+        }
+    }
+
+    private async Task<string> GetClientIpAddressAsync()
+    {
+        try
+        {
+            var httpClient = HttpClientFactory.CreateClient();
+            var response = await httpClient.GetStringAsync("https://api.ipify.org"); // Servicio público para obtener IP
+            return response;
+        }
+        catch (Exception)
+        {
+            return "Unknown";
         }
     }
 }

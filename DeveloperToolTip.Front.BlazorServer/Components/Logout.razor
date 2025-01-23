@@ -1,5 +1,6 @@
 ﻿@page "/logout"
 
+@inject DeveloperToolTip.Front.BlazorServer.Services.IAuthService _IAuthService
 @* @inject NavigationManager NavigationManager *@
 @inject Blazored.LocalStorage.ILocalStorageService LocalStorage
 
@@ -8,10 +9,40 @@
 @code {
     protected override async Task OnInitializedAsync()
     {
+
+        // Obtener el token del LocalStorage
+        var authToken = await LocalStorage.GetItemAsync<string>("authToken");
+
+        if (!string.IsNullOrEmpty(authToken))
+        {
+            try
+            {
+                // Ejecutar el método Logout del servicio
+                await _IAuthService.LogoutAsync(authToken);
+
+                // Eliminar el token del LocalStorage
+                await LocalStorage.RemoveItemAsync("authToken");
+
+                // Redirigir al componente de Login
+                navManager.NavigateTo("/", true);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error during logout: {ex.Message}");
+                // Opcionalmente, manejar errores de logout
+            }
+        }
+        else
+        {
+            // Redirigir al Login si no hay un token almacenado
+            navManager.NavigateTo("/", true);
+        }
+
+
         // Eliminar el token de autenticación almacenado
-        await LocalStorage.RemoveItemAsync("authToken");
+        //await LocalStorage.RemoveItemAsync("authToken");
 
         // Redirigir al componente de Login
-        navManager.NavigateTo("/", true);
+        //navManager.NavigateTo("/", true);
     }
 }

@@ -28,6 +28,27 @@ namespace DeveloperToolTip.Front.BlazorServer.Services
             return null;
         }
 
+        // Auth: Logout
+        public async Task<bool> LogoutAsync(string token)
+        {
+            var response = await _httpClient.PostAsync("Auth/logout", null);
+            return response.IsSuccessStatusCode;
+        }
+
+        // Auth: Get Active Session
+        public async Task<DeveloperLogin?> GetActiveSession()
+        {
+            var response = await _httpClient.GetAsync("Auth/active-session");
+
+            if (response.IsSuccessStatusCode)
+            {
+                var activeSession = await response.Content.ReadFromJsonAsync<DeveloperLogin>();
+                return activeSession;
+            }
+
+            return null;
+        }
+
 
         // Token Response Model
         public class TokenResponse

@@ -8,5 +8,7 @@ namespace DeveloperToolTip.Front.BlazorServer.Models
         public string? Username { get; set; }
         [Required]
         public string? Password { get; set; }
+
+        public string? IpAdress { get; set; }
     }
 }
