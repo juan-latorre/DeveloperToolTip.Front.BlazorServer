@@ -1,4 +1,8 @@
-﻿<div class="container-fluid">
+﻿@using DeveloperToolTip.Front.BlazorServer.Services
+@inject IAuthService _AuthService
+@inject IDeveloperService _DeveloperService
+
+<div class="container-fluid">
     <nav class="navbar navbar-expand-lg barra-superior-govco" aria-label="Barra superior">
         <a href="https://www.gov.co/" target="_blank" aria-label="Portal del Estado Colombiano - GOV.CO"></a>       
     </nav>
@@ -11,23 +15,23 @@
     <div class="container-navbar-menu-govco blue-menu-govco">    
         <nav class="navbar navbar-expand-lg navbar-menu-govco " role="navigation" aria-label="Menú ejemplo entidad">            
             <div class="container-fluid container-second-navbar-menu-govco">
-                
+
                 <!-- Botón del menú responsivo -->
                 <a class="navbar-brand navbar-toggler icon-entidad-menu-govco" href="Home"></a>               
 
                 <button class="navbar-toggler button-responsive-menu-govco collapsed"
-                        type="button"
-                        data-bs-toggle="collapse"
-                        data-bs-target="#navbarScroll"
-                        aria-controls="navbarScroll"
-                        aria-expanded="false"
-                        aria-label="Toggle navigation">
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#navbarScroll"
+                aria-controls="navbarScroll"
+                aria-expanded="false"
+                aria-label="Toggle navigation">
                     <span class="icon-bars-menu-govco"></span>
                 </button>               
-                
+
 
                 <div class="collapse navbar-collapse navbar-collapse-menu-govco" id="navbarScroll">
-                 
+
                     <div class="navbar-toggler">
                         <a class="icon-user-alt-menu-govco" href="home"></a>
                     </div>
@@ -84,14 +88,46 @@
 
 <script>       
     window.addEventListener("load", function () {
-        initHeader();
+    initHeader();
 
     });
 
     function initHeader() {
-        initTopBar();
-        initMenu();
+    initTopBar();
+    initMenu();
     }     
 </script>
+
+@code {
+    private int? DeveloperId;
+    private DeveloperDto _developer = new DeveloperDto();
+
+    protected override async Task OnInitializedAsync()
+    {
+
+        try
+        {
+            var activeSession = await _AuthService.GetActiveSession();
+            if (activeSession?.DeveloperId != null)
+            {
+                DeveloperId = activeSession.DeveloperId;
+                if (DeveloperId.HasValue) {
+
+                    _developer = await _DeveloperService.GetDevelopersById(DeveloperId.Value);
+                }
+
+            }
+            else
+            {
+                DeveloperId = null; // No hay sesión activa
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error fetching active session: {ex.Message}");
+            DeveloperId = null;
+        }
+    }
+}
 
 
