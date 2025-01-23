@@ -17,6 +17,7 @@ builder.Services.AddHttpClients(builder.Configuration);
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddBlazoredLocalStorage();
+builder.Services.AddHttpClient();
 
 builder.Services.AddRadzenComponents();
 //builder.Services.AddRadzenQueryStringThemeService();
