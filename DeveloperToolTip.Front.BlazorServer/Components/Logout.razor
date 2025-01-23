@@ -1,6 +1,8 @@
 ﻿@page "/logout"
 
-@inject DeveloperToolTip.Front.BlazorServer.Services.IAuthService _IAuthService
+@using DeveloperToolTip.Front.BlazorServer.Services
+
+@inject IAuthService _IAuthService
 @* @inject NavigationManager NavigationManager *@
 @inject Blazored.LocalStorage.ILocalStorageService LocalStorage
 
