@@ -37,15 +37,6 @@ main {
     flex: 1;
 }
 
-.body-diego {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    align-items: center;
-    text-align: center;
-    background-color: red;
-}
-
 /* Main Layout */
 .main-layout {
     display: flex;
@@ -96,18 +87,60 @@ main {
     margin-top: 4rem; /* Da espacio debajo de la barra de opciones */
 }
 
+/*.tabla-container {
+    margin-top: 1rem;*/ /* Asegura espacio entre el encabezado y la tabla */
+    /*overflow-x: auto;*/ /* Permite scroll horizontal en dispositivos pequeños */
+    /*z-index: 0;*/ /* Por debajo del menú desplegable */
+    /*position: relative;
+}*/
+
 .tabla-container {
-    margin-top: 1rem; /* Asegura espacio entre el encabezado y la tabla */
-    overflow-x: auto; /* Permite scroll horizontal en dispositivos pequeños */
-    z-index: 0; /* Por debajo del menú desplegable */
-    position: relative;
+    overflow-x: auto; /* Permite el desplazamiento horizontal */
+    overflow-y: auto; /* Permite el desplazamiento vertical */
+    max-width: calc(100% - 250px); /* Ajusta el ancho máximo dejando espacio para el menú */
+    margin-left: 250px; /* Empuja el contenido hacia la derecha para evitar el menú */
+    position: relative; /* Garantiza que se respete el flujo del documento */
+    background-color: #fff; /* Fondo blanco para destacar la tabla */
+    padding: 1rem; /* Espaciado interno */
+    border-radius: 8px; /* Opcional: bordes redondeados */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Opcional: añade sombra */
 }
 
+/*.rz-datagrid {
+    width: 100%;*/ /* Asegura que la tabla ocupe todo el ancho disponible */
+    /*margin: 0 auto;*/ /* Centra la tabla */
+    /*z-index: 0;*/ /* Asegura que no se superponga al menú */
+/*}*/
+
 .rz-datagrid {
-    width: 100%; /* Asegura que la tabla ocupe todo el ancho disponible */
-    margin: 0 auto; /* Centra la tabla */
-    z-index: 0; /* Asegura que no se superponga al menú */
+    width: 100%;
+    border-spacing: 0; /* Evita separación en celdas */
 }
+
+.rz-column-header {
+    position: relative;
+    z-index: 1 !important; /* Asegura que no se superpongan al menú lateral */
+}
+
+/* Estilo para las celdas de la tabla */
+.rz-cell {
+    position: relative;
+    z-index: 1; /* Asegura que las celdas no se vean afectadas */
+}
+
+    .rz-datagrid .rz-column-header {
+        position: relative; /* Asegura que los encabezados respeten el contenedor */
+        z-index: 1; /* Evita que los encabezados se sobrepongan al menú */
+        background-color: #fff; /* Fondo sólido para los encabezados */
+        border-bottom: 1px solid #ddd; /* Línea de separación */
+    }
+
+    .rz-datagrid .rz-column-header,
+    .rz-datagrid .rz-cell {
+        white-space: nowrap; /* Evita el desbordamiento de texto en las columnas */
+        overflow: hidden;
+        text-overflow: ellipsis; /* Muestra '...' cuando el texto es muy largo */
+    }
 
 /* Responsive Design */
 @media (max-width: 991px) {

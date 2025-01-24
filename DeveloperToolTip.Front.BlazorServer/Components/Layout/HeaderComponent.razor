@@ -14,14 +14,15 @@
 
         <!-- Información del Developer -->
         <div class="developer-info d-flex align-items-center text-white">
-            <div class="developer-icon rounded-circle bg-light d-flex align-items-center justify-content-center me-2" style="width: 40px; height: 40px;">
-                <i class="fas fa-user text-primary"></i>
-            </div>
+            <!-- Ícono del usuario -->
+            <div class="developer-icon me-2"></div>
+            <!-- Información del desarrollador -->
             <div class="developer-details text-end">
                 <h6 class="mb-0">@($"{_developer?.FirstName} {_developer?.LastName}" ?? "Nombre no disponible")</h6>
                 <small>Role : @(_role?.RoleName ?? "---")</small>
             </div>
         </div>
+
     </nav>
     <!-- Menu de Navegacion -->
     <div class="container-navbar-menu-govco blue-menu-govco">    
@@ -55,12 +56,16 @@
                                 </span>
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link dir-menu-govco" aria-current="page" href="classifiers/ClassifierDashBoard">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dir-menu-govco" aria-current="page" href="classifiers/ClassifierDashBoard" id="navbarDropdown1" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 <span class="text-item-menu-govco">
                                     Classifier DashBoard
                                 </span>
                             </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item dir-menu-govco" href="classifiers/TopicCategory">Topic Category</a></li>
+                                <li><a class="dropdown-item dir-menu-govco" href="classifiers/DeveloperRole">IT Roles</a></li>                                
+                            </ul>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link dir-menu-govco" aria-current="page" href="classifiers/TopicCategory">
