@@ -459,7 +459,7 @@ html {
     }
 
     .navbar-collapse-menu-govco {
-        z-index: 2;
+        z-index: 1000;
         position: absolute;
         top: 3.563rem;
         width: auto;
@@ -544,7 +544,7 @@ html {
         }
 
     .navbar-menu-govco .megamenu-menu-govco, .navbar-menu-govco .dropdown-large-menu-govco {
-        margin-top: 0 !important;
+        margin-top: 0 !important;       
     }
 
     .container-second-navbar-menu-govco {
@@ -747,8 +747,19 @@ html {
 }
 
 .developer-icon {
+    font-family: "govco-font";
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 50%;
+    background-color: #ffffff; 
+    color: #0057b8; 
+    border-radius: 50%; 
+    width: 40px; 
+    height: 40px; 
+    font-size: 24px; 
 }
+
+    .developer-icon::before {
+        content: "\eba3"; 
+        font-family: "govco-font"; 
+    }
