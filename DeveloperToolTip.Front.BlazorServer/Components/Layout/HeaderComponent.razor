@@ -1,16 +1,28 @@
 ﻿@using DeveloperToolTip.Front.BlazorServer.Services
 @inject IAuthService _AuthService
 @inject IDeveloperService _DeveloperService
+@inject IRoleService _RoleService
+@inject Blazored.LocalStorage.ILocalStorageService LocalStorage
 
-<div class="container-fluid">
-    <nav class="navbar navbar-expand-lg barra-superior-govco" aria-label="Barra superior">
-        <a href="https://www.gov.co/" target="_blank" aria-label="Portal del Estado Colombiano - GOV.CO"></a>       
-    </nav>
-    <div class="logo-aut-header-govco">        
-        <div class="container-logo-header-govco">
-            <span class="logo-header-govco"></span>         
+<div class="container-fluid p-0">
+    <nav class="navbar navbar-expand-lg barra-superior-govco d-flex justify-content-between align-items-center" aria-label="Barra superior" style="background-color: #0033A0;">
+        <!-- Logo de GOV.CO -->
+        <a href="https://www.gov.co/" target="_blank" aria-label="Portal del Estado Colombiano - GOV.CO" class="d-flex align-items-center text-white text-decoration-none">
+            <span class="logo-header-govco me-2" style="background-image: url('/path-to-logo.png'); width: 40px; height: 40px; background-size: cover;"></span>
+            <strong>GOV.CO</strong>
+        </a>
+
+        <!-- Información del Developer -->
+        <div class="developer-info d-flex align-items-center text-white">
+            <div class="developer-icon rounded-circle bg-light d-flex align-items-center justify-content-center me-2" style="width: 40px; height: 40px;">
+                <i class="fas fa-user text-primary"></i>
+            </div>
+            <div class="developer-details text-end">
+                <h6 class="mb-0">@($"{_developer?.FirstName} {_developer?.LastName}" ?? "Nombre no disponible")</h6>
+                <small>Role : @(_role?.RoleName ?? "---")</small>
+            </div>
         </div>
-    </div>
+    </nav>
     <!-- Menu de Navegacion -->
     <div class="container-navbar-menu-govco blue-menu-govco">    
         <nav class="navbar navbar-expand-lg navbar-menu-govco " role="navigation" aria-label="Menú ejemplo entidad">            
@@ -101,31 +113,45 @@
 @code {
     private int? DeveloperId;
     private DeveloperDto _developer = new DeveloperDto();
+    private RoleDto _role = new RoleDto();
+    private bool _dataLoaded = false;
 
-    protected override async Task OnInitializedAsync()
+    //protected override async Task OnInitializedAsync()
+    protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-
-        try
+        if (firstRender && !_dataLoaded)
         {
-            var activeSession = await _AuthService.GetActiveSession();
-            if (activeSession?.DeveloperId != null)
+            try
             {
-                DeveloperId = activeSession.DeveloperId;
-                if (DeveloperId.HasValue) {
+                var activeSession = await _AuthService.GetActiveSession();
+                if (activeSession?.DeveloperId != null)
+                {
+                    DeveloperId = activeSession.DeveloperId;
+                    if (DeveloperId.HasValue)
+                    {
 
-                    _developer = await _DeveloperService.GetDevelopersById(DeveloperId.Value);
+                        _developer = await _DeveloperService.GetDevelopersById(DeveloperId.Value);
+
+                        if (_developer != null) {
+                            _role = await _RoleService.GetRoleById(_developer.RoleId);
+                        }
+                    }
+
+                }
+                else
+                {
+                    DeveloperId = null; // No hay sesión activa
                 }
 
+                _dataLoaded = true; // Marcar como datos cargados
+                StateHasChanged(); // Actualizar el componente
             }
-            else
+            catch (Exception ex)
             {
-                DeveloperId = null; // No hay sesión activa
+                Console.WriteLine($"Error fetching active session: {ex.Message}");
+                DeveloperId = null;
             }
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine($"Error fetching active session: {ex.Message}");
-            DeveloperId = null;
+
         }
     }
 }

@@ -730,3 +730,25 @@ html {
         outline: max(0.125rem, 0.15em) solid #000000;
         outline-offset: max(0.125rem, 0.15em);
     }
+
+/* Developer Info */
+
+.logo-header-govco {
+    display: inline-block;
+    background-image: url('/path-to-logo.png'); /* Ruta del logo de GOV.CO */
+    width: 40px;
+    height: 40px;
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.developer-info {
+    font-size: 0.9rem;
+}
+
+.developer-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+}
