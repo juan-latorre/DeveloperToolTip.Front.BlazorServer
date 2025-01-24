@@ -34,7 +34,7 @@ namespace DeveloperToolTip.Front.BlazorServer.Services
             {
                 var requestBody = new
                 {
-                    model = "gpt-3.5-turbo",//"gpt-3.5-turbo", 
+                    model = "gpt-3.5-turbo",//gpt-4o, gpt-3.5-turbo, gpt-4o-mini models 
                     messages = new[] { new { role = "user", content = prompt } },
                     max_tokens = 100
                 };
