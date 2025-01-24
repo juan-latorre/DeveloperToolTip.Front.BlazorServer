@@ -1,4 +1,5 @@
 ﻿using System.Net.Http.Headers;
+using System.Text.Json;
 
 namespace DeveloperToolTip.Front.BlazorServer.Services
 {
@@ -33,7 +34,7 @@ namespace DeveloperToolTip.Front.BlazorServer.Services
             {
                 var requestBody = new
                 {
-                    model = "gpt-3.5-turbo", // Especifica el modelo a usar
+                    model = "gpt-3.5-turbo",//"gpt-3.5-turbo", 
                     messages = new[] { new { role = "user", content = prompt } },
                     max_tokens = 100
                 };
@@ -43,12 +44,20 @@ namespace DeveloperToolTip.Front.BlazorServer.Services
                 if (response.IsSuccessStatusCode)
                 {
                     var content = await response.Content.ReadAsStringAsync();
-                    return content; // Procesar según el esquema de respuesta de OpenAI
+                    // Parsear y devolver el contenido del mensaje
+                    var parsedResponse = JsonDocument.Parse(content);
+                    var messageContent = parsedResponse.RootElement
+                                                       .GetProperty("choices")[0]
+                                                       .GetProperty("message")
+                                                       .GetProperty("content")
+                                                       .GetString();
+                    return messageContent ?? "Respuesta vacía.";
                 }
 
                 // Manejar respuestas no exitosas
                 var errorContent = await response.Content.ReadAsStringAsync();
                 var errorCompleteMsg = $"OpenAI API request failed with status code {response.StatusCode}. Details: {errorContent}";
+                
                 if (string.IsNullOrEmpty(errorContent))
                 {
                     return errorCompleteMsg;
