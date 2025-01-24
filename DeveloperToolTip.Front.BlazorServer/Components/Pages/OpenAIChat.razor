@@ -4,48 +4,68 @@
 
 @inject IOpenAIService _IOpenAIService;
 
-<div class="container mt-4">
-    <h2 class="text-center mb-4">OpenAI Chat</h2>
+<div class="card">
+    <div class="card-header bg-primary text-white">
+        Chat con OpenAI
+    </div>
+    <div class="card-body">
+        <div class="mb-3">
+            <label for="prompt" class="form-label">Tu pregunta:</label>
+            <textarea id="prompt" class="form-control" @bind="Prompt"></textarea>
+        </div>
+        <button class="btn btn-primary" @onclick="SendRequest">Enviar</button>
 
-    <!-- Formulario de entrada -->
-    <div class="card shadow-sm">
-        <div class="card-body">
-            <form @onsubmit="HandleChatAsync">
-                <div class="mb-3">
-                    <label for="userInput" class="form-label">Pregunta</label>
-                    <textarea id="userInput" class="form-control" rows="3" @bind="UserInput" placeholder="Escribe tu pregunta..."></textarea>
-                </div>
-                <button type="submit" class="btn btn-primary">Enviar</button>
-            </form>
+        <div class="mt-4">
+            <h5>Historial:</h5>
+            <ul class="list-group">
+                @foreach (var item in ChatHistory)
+                {
+                    <li class="list-group-item">
+                        <strong>Pregunta #@item.Number:</strong> @item.Question <br />
+                        <strong>Respuesta:</strong> @item.Answer
+                    </li>
+                }
+            </ul>
         </div>
     </div>
-
-    <!-- Respuesta del chatbot -->
-    @if (!string.IsNullOrEmpty(Response))
-    {
-        <div class="card shadow-sm mt-4">
-            <div class="card-header bg-info text-white">
-                Respuesta de OpenAI
-            </div>
-            <div class="card-body">
-                <p class="card-text">@Response</p>
-            </div>
-        </div>
-    }
 </div>
 
 @code {
-    private string UserInput { get; set; } = string.Empty;
-    private string Response { get; set; } = string.Empty;
+    private string Prompt { get; set; } = string.Empty;
+    private List<ChatItem> ChatHistory { get; set; } = new();
 
-    private async Task HandleChatAsync()
+    private async Task SendRequest()
     {
-        if (!string.IsNullOrEmpty(UserInput))
+        if (!string.IsNullOrWhiteSpace(Prompt))
         {
-            // Aquí llamamos al servicio de OpenAI para obtener la respuesta
-            //"Respuesta generada por OpenAI API!";
-            Response = await _IOpenAIService.SendRequestAsync(UserInput);
-            UserInput = string.Empty; // Limpiar el campo de entrada
+            try
+            {
+                // Realizar la solicitud a OpenAI
+                var response = await _IOpenAIService.SendRequestAsync(Prompt);
+
+                // Agregar la pregunta y respuesta al historial
+                ChatHistory.Add(new ChatItem
+                    {
+                        Number = ChatHistory.Count + 1,
+                        Question = Prompt,
+                        Answer = response
+                    });
+
+                // Limpiar el prompt
+                Prompt = string.Empty;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error al procesar la solicitud: {ex.Message}");
+            }
         }
     }
+
+    private class ChatItem
+    {
+        public int Number { get; set; }
+        public string Question { get; set; }
+        public string Answer { get; set; }
+    }
+
 }
