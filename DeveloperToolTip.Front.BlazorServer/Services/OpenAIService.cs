@@ -51,7 +51,7 @@ namespace DeveloperToolTip.Front.BlazorServer.Services
                                                        .GetProperty("message")
                                                        .GetProperty("content")
                                                        .GetString();
-                    return messageContent ?? "Respuesta vacía.";
+                    return messageContent ?? "Empty Response.";
                 }
 
                 // Manejar respuestas no exitosas

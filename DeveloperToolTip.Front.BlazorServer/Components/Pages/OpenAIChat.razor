@@ -1,71 +1,113 @@
 ﻿@page "/OpenAIChat"
 
 @using DeveloperToolTip.Front.BlazorServer.Services
+@using System.Text.RegularExpressions;
+
 
 @inject IOpenAIService _IOpenAIService;
+@inject IJSRuntime js
 
-<div class="card">
-    <div class="card-header bg-primary text-white">
-        Chat con OpenAI
+<div class="chat-container">
+    <div class="chat-messages" @ref="ChatMessagesDiv" id="chatContainer">
+        @foreach (var item in ChatHistory)
+        {
+            <div class="chat-message @(item.IsUser ? "user-message" : "bot-message")">
+                <p>@((MarkupString)FormatResponse(item.Content))</p>
+            </div>
+        }
     </div>
-    <div class="card-body">
-        <div class="mb-3">
-            <label for="prompt" class="form-label">Tu pregunta:</label>
-            <textarea id="prompt" class="form-control" @bind="Prompt"></textarea>
-        </div>
+    <div class="chat-input">
+        <textarea class="form-control" placeholder="Escribe tu mensaje..." @bind="Prompt"></textarea>
         <button class="btn btn-primary" @onclick="SendRequest">Enviar</button>
-
-        <div class="mt-4">
-            <h5>Historial:</h5>
-            <ul class="list-group">
-                @foreach (var item in ChatHistory)
-                {
-                    <li class="list-group-item">
-                        <strong>Pregunta #@item.Number:</strong> @item.Question <br />
-                        <strong>Respuesta:</strong> @item.Answer
-                    </li>
-                }
-            </ul>
-        </div>
     </div>
 </div>
 
+<script>
+    //     function scrollToBottom(elementId) {
+    //     var element = document.getElementById(elementId);
+    //     if (element) {
+    //         element.scrollTop = element.scrollHeight;
+    //     }
+    // }
+
+        function scrollToBottom(selector) {
+        var element = document.querySelector(selector);
+        if (element) {
+            element.scrollTop = element.scrollHeight;
+        }
+    }
+</script>
+
 @code {
     private string Prompt { get; set; } = string.Empty;
-    private List<ChatItem> ChatHistory { get; set; } = new();
+    private List<ChatMessage> ChatHistory { get; set; } = new();
+    private ElementReference ChatMessagesDiv;
 
     private async Task SendRequest()
     {
         if (!string.IsNullOrWhiteSpace(Prompt))
         {
+            // Agregar el mensaje del usuario al historial
+            ChatHistory.Add(new ChatMessage
+                {
+                    IsUser = true,
+                    Content = Prompt
+                });
+
             try
             {
-                // Realizar la solicitud a OpenAI
+                // Llamar al API de OpenAI
                 var response = await _IOpenAIService.SendRequestAsync(Prompt);
 
-                // Agregar la pregunta y respuesta al historial
-                ChatHistory.Add(new ChatItem
+                // Agregar la respuesta de la IA al historial
+                ChatHistory.Add(new ChatMessage
                     {
-                        Number = ChatHistory.Count + 1,
-                        Question = Prompt,
-                        Answer = response
+                        IsUser = false,
+                        Content = response
                     });
-
-                // Limpiar el prompt
-                Prompt = string.Empty;
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error al procesar la solicitud: {ex.Message}");
+                ChatHistory.Add(new ChatMessage
+                    {
+                        IsUser = false,
+                        Content = "An error occurred while processing your request!"
+                    });
+                Console.WriteLine($"Error: {ex.Message}");
             }
+
+            // Limpiar el input
+            Prompt = string.Empty;
         }
     }
 
-    private class ChatItem
+    private async Task ScrollToBottom()
     {
-        public int Number { get; set; }
-        public string Question { get; set; }
-        public string Answer { get; set; }
+        //await js.InvokeVoidAsync("scrollToBottom", ChatMessagesDiv);
+        //await js.InvokeVoidAsync("scrollToBottom", new object[] { "chat-container" });
+        await js.InvokeVoidAsync("scrollToBottom", "#chatContainer");
+
     }
 
+    private string FormatResponse(string response)
+    {
+        if (string.IsNullOrEmpty(response)) return response;
+
+        var urlPattern = @"(http|https):\/\/[^\s]+";
+        var regex = new Regex(urlPattern);
+
+        // Reemplazar URLs con etiquetas HTML `<a>`
+        var formattedResponse = regex.Replace(response, match =>
+            $"<a href=\"{match.Value}\" target=\"_blank\" class=\"text-decoration-none text-primary\">{match.Value}</a>");
+
+        // Reemplazar saltos de línea con `<br>` para mantener el formato
+        return formattedResponse.Replace("\n", "<br>");
+    }
+
+    private class ChatMessage
+    {
+        public bool IsUser { get; set; }
+        public string Content { get; set; }
+    }
 }
+
