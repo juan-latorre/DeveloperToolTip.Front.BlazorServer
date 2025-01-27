@@ -19,7 +19,8 @@
         else if (isInitialized && string.IsNullOrEmpty(authToken))
         {
             // Redirige desde Routes directamente
-            NavigationManager.NavigateTo("/", true);
+            //NavigationManager.NavigateTo("/", true);
+            <RedirectToLogin />
         }
         else
         {
