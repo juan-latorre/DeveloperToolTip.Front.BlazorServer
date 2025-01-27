@@ -4,6 +4,8 @@
         <FocusOnNavigate RouteData="routeData" Selector="h1" />
     </Found>
 </Router> *@
+ @using DeveloperToolTip.Front.BlazorServer.Services
+ @inject IAuthService _AuthService
 
  @inject Blazored.LocalStorage.ILocalStorageService LocalStorage
  @inject NavigationManager NavigationManager
@@ -13,6 +15,11 @@
         @if (routeData.PageType == typeof(Login))
         {
             <RouteView RouteData="routeData" DefaultLayout="null" />
+        }
+        else if (isInitialized && string.IsNullOrEmpty(authToken))
+        {
+            // Redirige desde Routes directamente
+            NavigationManager.NavigateTo("/", true);
         }
         else
         {
@@ -28,20 +35,36 @@
 
 
 @code {
-    private string authToken;
+    private string? authToken;
+    private bool isInitialized = false;
 
-    protected override async Task OnInitializedAsync()
+    protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        // Verifica si el entorno es prerenderizado
-        if (OperatingSystem.IsBrowser())
+        if (firstRender && !isInitialized)
         {
-            authToken = await LocalStorage.GetItemAsync<string>("authToken");
-
-            // Si no hay token, redirige al login
-            if (string.IsNullOrEmpty(authToken))
+            try
             {
-                NavigationManager.NavigateTo("/login");
+                // Obtén el token después de la renderización
+                authToken = await LocalStorage.GetItemAsync<string>("authToken");
+
+                // Marca la inicialización completa
+                isInitialized = true;
+
+                // Si no hay token, redirige al Login
+                if (string.IsNullOrEmpty(authToken) && NavigationManager.Uri != NavigationManager.BaseUri)
+                {
+                    NavigationManager.NavigateTo("/", true);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error accessing LocalStorage: {ex.Message}");
+            }
+            finally
+            {
+                StateHasChanged(); // Refresca la UI
             }
         }
     }
+
 }

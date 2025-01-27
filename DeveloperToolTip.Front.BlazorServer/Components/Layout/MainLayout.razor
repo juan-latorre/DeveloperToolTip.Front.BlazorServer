@@ -1,5 +1,5 @@
 ﻿@inherits LayoutComponentBase
-
+@inject Blazored.LocalStorage.ILocalStorageService LocalStorage
 
 <RadzenComponents @rendermode="InteractiveServer" />
 
@@ -22,6 +22,27 @@
     <FooterComponent></FooterComponent>
 
 </div>
+
+@code {
+    // protected override async Task OnAfterRenderAsync(bool firstRender)
+    // {
+    //     if (firstRender)
+    //     {
+    //         // Obtener el token del LocalStorage
+    //         var authToken = await LocalStorage.GetItemAsync<string>("authToken");
+
+    //         if (string.IsNullOrEmpty(authToken))
+    //         {
+    //             navManager.NavigateTo("/", true);
+    //         }
+
+    //         //var activeSession = await _IAuthService.GetActiveSession();
+
+    //     }
+
+
+    // }
+}
 
 
 
