@@ -1,71 +1,55 @@
-﻿@* <Router AppAssembly="typeof(Program).Assembly">
-    <Found Context="routeData">
-        <RouteView RouteData="routeData" DefaultLayout="typeof(Layout.MainLayout)" />
-        <FocusOnNavigate RouteData="routeData" Selector="h1" />
-    </Found>
-</Router> *@
- @using DeveloperToolTip.Front.BlazorServer.Services
- @inject IAuthService _AuthService
+﻿@inject Blazored.LocalStorage.ILocalStorageService LocalStorage
+@inject NavigationManager NavigationManager
 
- @inject Blazored.LocalStorage.ILocalStorageService LocalStorage
- @inject NavigationManager NavigationManager
-
-<Router AppAssembly="typeof(Program).Assembly">
-    <Found Context="routeData">
-        @if (routeData.PageType == typeof(Login))
-        {
-            <RouteView RouteData="routeData" DefaultLayout="null" />
-        }
-        else if (isInitialized && string.IsNullOrEmpty(authToken))
-        {
-            // Redirige desde Routes directamente
-            //NavigationManager.NavigateTo("/", true);
-            <RedirectToLogin />
-        }
-        else
-        {
-            <RouteView RouteData="routeData" DefaultLayout="typeof(MainLayout)" />
-        }
-    </Found>
-    <NotFound>
-        <LayoutView Layout="typeof(MainLayout)">
-            <p>Sorry, there's nothing at this address.</p>
-        </LayoutView>
-    </NotFound>
-</Router>
-
+@if (isLoading)
+{
+    <!-- Pantalla de carga mientras se valida la autenticación -->
+    <div class="loading-container d-flex align-items-center justify-content-center" style="height: 100vh;">
+        <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>
+}
+else
+{
+    <Router AppAssembly="typeof(Program).Assembly">
+        <Found Context="routeData">
+            @if (routeData.PageType == typeof(Login))
+            {
+                <RouteView RouteData="routeData" DefaultLayout="null" />
+            }
+            else
+            {
+                <RouteView RouteData="routeData" DefaultLayout="typeof(MainLayout)" />
+            }
+        </Found>
+        <NotFound>
+            <LayoutView Layout="typeof(MainLayout)">
+                <p>Sorry, there's nothing at this address.</p>
+            </LayoutView>
+        </NotFound>
+    </Router>
+}
 
 @code {
-    private string? authToken;
-    private bool isInitialized = false;
+    private bool isLoading = true; // Variable para controlar si se muestra la pantalla de carga
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        if (firstRender && !isInitialized)
+        if (firstRender)
         {
-            try
-            {
-                // Obtén el token después de la renderización
-                authToken = await LocalStorage.GetItemAsync<string>("authToken");
+            // Validar si el usuario tiene un token válido en el LocalStorage
+            var authToken = await LocalStorage.GetItemAsync<string>("authToken");
 
-                // Marca la inicialización completa
-                isInitialized = true;
+            if (string.IsNullOrEmpty(authToken) && NavigationManager.Uri != NavigationManager.BaseUri)
+            {
+                // Redirigir al login si no hay token
+                NavigationManager.NavigateTo("/", true);
+            }
 
-                // Si no hay token, redirige al Login
-                if (string.IsNullOrEmpty(authToken) && NavigationManager.Uri != NavigationManager.BaseUri)
-                {
-                    NavigationManager.NavigateTo("/", true);
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error accessing LocalStorage: {ex.Message}");
-            }
-            finally
-            {
-                StateHasChanged(); // Refresca la UI
-            }
+            // Marcar la validación como completa y renderizar el contenido
+            isLoading = false;
+            StateHasChanged();
         }
     }
-
 }
